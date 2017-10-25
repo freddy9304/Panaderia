@@ -1,0 +1,415 @@
+<?php
+$url = BASE_URL;
+// print_r($this->route);
+ ?>
+<head>
+      <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Panaderia San Miguel </title>
+	<!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+     <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+        <!-- CUSTOM STYLES-->
+    <link href="assets/css/custom.css" rel="stylesheet" />
+     <!-- GOOGLE FONTS-->
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+<div class="todo">
+<body>
+    <div id="wrapper">
+       <div id="panaderia" class="navbar navbar-inverse_2">
+          <!-- <div class="adjust-nav_2">
+              <h1>Panaderia San Miguel</h1>
+          </div> -->
+          <div class="adjust-nav_2 moto-widget-text-content moto-widget-text-editable">
+            <p style="text-align: center;" class="moto-text_system_2">Bienvenidos al sistema</p>
+            <p style="text-align: center;" class="moto-text_system_1">PANADERIA SAN MIGUEL</p>
+            <p style="text-align: center;" class="moto-text_normal">
+            <img src="<?php echo $url; ?>assets/img/bienvenida1.png" width="50%" style="margin-top:-3%;" alt="">
+              <span class="moto-color5_5"></span>
+              <br>
+            </p>
+          </div>
+        </div>
+
+        <!-- /. NAV TOP  -->
+      <div id="loco" class="hidden">
+        <nav class="navbar-default navbar-side col-lg-2" role="navigation">
+          <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+
+                <li href="#sesion" class="active-link">
+                  <a id="esconder1" href="<?php echo $url;?>user#sesion"> Administracion </a>
+                </li>
+                <li>
+                  <a id="esconder2" href="<?php echo $url;?>index#sesion" > Panaderia </a>
+                </li>
+                <li>
+                  <a id="esconder3" href="<?php echo $url;?>reposteria#sesion">Pedidos de Pastel </a>
+                  <!-- <a class="hidden" href="#sesion"></a> -->
+                </li>
+                <?php  if ($this->session->userdata('login')){?>
+               <li>
+                 <a href="<?php echo $url;?>tabla#sesion"> Tabla de ventas </a>
+               </li>
+              <?php } ?>
+            </ul>
+          </div>
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" class="col-lg-8" >
+          <div id="page-inner"  style="background-image:url(<?php echo $url?>assets/img/fondo.png); background-size:contain;" >
+            <div id="sesion" class="row text-center pad-top">
+
+              <?php $this->load->view($contenido); ?>
+            </div>
+          </div>
+        </div>
+        <form method="POST" action="<?php echo $url;?>venta/insertar_venta">
+        <div style="padding: 110px 20px; text-align: center; margin-left: 40px; font-family: 'Oswald', sans-serif;" class="col-lg-2">
+          <table id="totales" style="width:100%">
+            <caption>Total a pagar</caption>
+            <br>
+            <tbody>
+              <tr class="hidden">
+                  <td>Uno</td>
+              </tr>
+            </tbody>
+          </table>
+          <table id="to" style="width:100%">
+            <tbody>
+              <hr style="border-top: 2px solid #6b6b6b;">
+              <tr class="hidden">
+                  <td>Uno</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <button type="button" class="venta btn btn-danger disabled" name="button">Terminar venta</button>
+          <br><br>
+            <div id="imprimir">
+
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+     <!-- /. WRAPPER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+    <script src="assets/js/jquery-1.10.2.js"></script>
+      <!-- BOOTSTRAP SCRIPTS -->
+    <script src="assets/js/bootstrap.min.js"></script>
+      <!-- CUSTOM SCRIPTS -->
+    <script src="assets/js/custom.js"></script>
+
+
+</body>
+</div>
+<script type="text/javascript">
+var total_blanco = 0;
+var total_dulce = 0;
+var total_repos = 0;
+var total_velas = 0;
+var total_leche = 0;
+var total_cafe = 0;
+
+  $("#blanco").click(function(event){
+    $(".unidades").removeClass("hidden");
+    $(".enviar").removeClass("hidden");
+  });
+
+  $(".enviar").click(function(event){
+    $(".bolillo").each(function(e){
+    	var i = $(this).attr("data-precio");
+      var cantidad = $(this).val();
+      total_blanco+= cantidad * i ;
+      // console.log(total_blanco);
+    });
+
+    var capa = document.getElementById("capa");
+    // console.log(capa);
+    var h3 = document.createElement("h3");
+    h3.id="blanco_precio";
+    h3.innerHTML = 'El total de pan blanco es: '+total_blanco+'';
+    capa.appendChild(h3);
+
+    $('#totales tr:last').after('<tr id=1><td>Pan Blanco</td><td id="a">'+total_blanco+'</td></tr>');
+    $(".venta").removeClass("disabled");
+    $(".delete").removeClass("hidden");
+    $(".enviar").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $(".delete").click(function (event) {
+     total_blanco = 0;
+      $(".delete").addClass("hidden");
+      $("#blanco_precio").remove();
+      $("#1").remove();
+      $(".enviar").removeClass("disabled");
+      $(".venta").addClass("disabled");
+      $("#total_gen").remove();
+      $("#ticket").remove();
+      $("#ticket_imprimir").remove();
+  });
+
+  $("#dulce").click(function(event){
+    $(".precios").removeClass("hidden");
+    $(".enviar2").removeClass("hidden");
+  });
+
+  $(".enviar2").click(function(event){
+    $(".dulce").each(function(e){
+      var i = $(this).attr("data-precio");
+      var cantidad = $(this).val();
+      total_dulce+= cantidad * i ;
+      // console.log(total_blanco);
+    });
+    var capa = document.getElementById("capa2");
+    var h3 = document.createElement("h3");
+    h3.id="dulce_precio";
+    h3.innerHTML = 'El total de pan de dulce es: $'+total_dulce+'';
+    capa.appendChild(h3);
+
+    $('#totales tr:last').after('<tr id=2><td>Pan Dulce</td><td id="b">'+total_dulce+'</td></tr>');
+    $(".venta").removeClass("disabled");
+    $(".delete2").removeClass("hidden");
+    $(".enviar2").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $(".delete2").click(function (event) {
+    total_dulce = 0;
+    $(".delete2").addClass("hidden");
+    $("#dulce_precio").remove();
+    $("#2").remove();
+    $(".enviar2").removeClass("disabled");
+    $(".venta").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $("#repos").click(function(event){
+    $(".rebanadas").removeClass("hidden");
+    $(".enviar3").removeClass("hidden");
+  });
+
+  $(".enviar3").click(function(event){
+    $(".reposteria").each(function(e){
+      var i = $(this).attr("data-precio");
+      var cantidad = $(this).val();
+      total_repos+= cantidad * i ;
+      // console.log(total_blanco);
+    });
+    var capa = document.getElementById("capa3");
+    var h3 = document.createElement("h3");
+    h3.id="repost"
+    h3.innerHTML = 'El total de reposteria es: '+total_repos+'';
+    capa.appendChild(h3);
+
+    $('#totales tr:last').after('<tr id=3><td>Reposteria</td><td id="c">'+total_repos+'</td></tr>');
+    $(".venta").removeClass("disabled");
+    $(".delete3").removeClass("hidden");
+    $(".enviar3").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $(".delete3").click(function (event) {
+    total_repos = 0;
+    $(".delete3").addClass("hidden");
+    $("#repost").remove();
+    $("#3").remove();
+    $(".enviar3").removeClass("disabled");
+    $(".venta").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $("#velas").click(function(event){
+    $(".velas").removeClass("hidden");
+    $(".enviar4").removeClass("hidden");
+  });
+
+  $(".enviar4").click(function(event){
+    $(".velas").each(function(e){
+      var i = $(this).attr("data-precio");
+      var cantidad = $(this).val();
+      total_velas+= cantidad * i ;
+      // console.log(total_blanco);
+    });
+    var capa = document.getElementById("capa4");
+    var h3 = document.createElement("h3");
+    h3.id="velast"
+    h3.innerHTML = 'El total de velas es: '+total_velas+'';
+    capa.appendChild(h3);
+
+    $('#totales tr:last').after('<tr id=4><td>Velas</td><td id="d">'+total_velas+'</td></tr>');
+    $(".venta").removeClass("disabled");
+    $(".delete4").removeClass("hidden");
+    $(".enviar4").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $(".delete4").click(function (event) {
+    total_velas = 0;
+    $(".delete4").addClass("hidden");
+    $("#velast").remove();
+    $("#4").remove();
+    $(".enviar4").removeClass("disabled");
+    $(".venta").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $("#varios").click(function(event){
+    $(".varios").removeClass("hidden");
+    $(".enviar5").removeClass("hidden");
+    $(".enviar6").removeClass("hidden");
+  });
+
+  $(".enviar5").click(function(event){
+    $(".leche").each(function(e){
+      var i = $(this).attr("data-precio");
+      var cantidad = $(this).val();
+      total_leche+= cantidad * i ;
+      // console.log(total_blanco);
+    });
+    var capa = document.getElementById("capa5");
+    var h3 = document.createElement("h3");
+    h3.id="lechet"
+    h3.innerHTML = 'El total de leche es: '+total_leche+'';
+    capa.appendChild(h3);
+
+    $('#totales tr:last').after('<tr id=5><td>Leche</td><td id="e">'+total_leche+'</td></tr>');
+    $(".venta").removeClass("disabled");
+    $(".delete5").removeClass("hidden");
+    $(".enviar5").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $(".delete5").click(function (event) {
+    total_leche = 0;
+    $(".delete5").addClass("hidden");
+    $("#lechet").remove();
+    $("#5").remove();
+    $(".enviar5").removeClass("disabled");
+    $(".venta").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $(".enviar6").click(function(event){
+    $(".cafe").each(function(e){
+      var i = $(this).attr("data-precio");
+      var cantidad = $(this).val();
+      total_cafe+= cantidad * i ;
+      // console.log(total_blanco);
+    });
+    var capa = document.getElementById("capa6");
+    var h3 = document.createElement("h3");
+    h3.id="cafet"
+    h3.innerHTML = 'El total de cafe es: '+total_cafe+'';
+    capa.appendChild(h3);
+
+    $('#totales tr:last').after('<tr id=6><td>Cafe</td><td id="f">'+total_cafe+'</td></tr>');
+    $(".venta").removeClass("disabled");
+    $(".delete6").removeClass("hidden");
+    $(".enviar6").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $(".delete6").click(function (event) {
+    total_cafe = 0;
+    $(".delete6").addClass("hidden");
+    $("#cafet").remove();
+    $("#6").remove();
+    $(".enviar6").removeClass("disabled");
+    $(".venta").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $(".venta").click(function(event){
+    var a = $("#a").text() != "" ? parseFloat($("#a").text()):0;
+    var b = $("#b").text() != "" ? parseInt($("#b").text()):0;
+    var c = $("#c").text() != "" ? parseInt($("#c").text()):0;
+    var d = $("#d").text() != "" ? parseInt($("#d").text()):0;
+    var e = $("#e").text() != "" ? parseFloat($("#e").text()):0;
+    var f = $("#f").text() != "" ? parseFloat($("#f").text()):0;
+
+    var gen = a + b + c + d + e + f;
+
+    $('#to tr:last').after('<tr id="total_gen"><td>El total es</td><td style="text-align:center;">'+gen+'<input class="hidden" type="text" name="total_venta" value="'+gen+'"></td></tr>');
+    $(".venta").addClass("disabled");
+    var imprimir = document.getElementById("imprimir");
+    var ticket = document.createElement("button");
+    ticket.id="ticket_imprimir";
+    ticket.name="submit";
+    ticket.type="submit";
+    ticket.className="btn btn-success";
+    ticket.innerHTML = 'Imprimir ticket';
+    imprimir.appendChild(ticket);
+  });
+
+  $("#imprimir").click(function(event){
+    var hola = confirm("¿Desea finalizar la venta e imprimir el ticket de compra?");
+    // console.log(hola);
+  });
+ //
+// $("#esconder1").click(function(){
+//   // setTimeout(function(){
+//   // if ($("#loco").hasClass("hidden")) {
+//     // $('#panaderia').addClass("hidden");
+//     // $('#loco').removeClass("hidden");
+//   // }else{
+//     // $('#panaderia').removeClass("hidden");
+//     // $('#loco').addClass("hidden");
+//   // }
+//     //  $('#panaderia').addClass("hidden");
+//     //  $('#loco').removeClass("hidden");
+//     alert("Hello");
+//     // }, 3000);
+// });
+
+ $(document).ready(function(){
+  //  setTimeout(function(){
+  //    $('#panaderia').addClass("hidden");
+  //    $('#loco').removeClass("hidden");
+  //     // alert("Hello");
+  //   }, 3000);
+  $("body").keyup(function (e) {
+    if (e.keyCode == 66) {
+      if ($("#loco").hasClass("hidden")) {
+        $('#panaderia').addClass("hidden");
+        $('#loco').removeClass("hidden");
+      }else{
+        $('#panaderia').removeClass("hidden");
+        $('#loco').addClass("hidden");
+      }
+      // alert('Enter key pressed!');
+      // console.log(e.keyCode);
+    }
+  });
+ });
+
+</script>

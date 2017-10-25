@@ -1,0 +1,36 @@
+<?php
+$url = BASE_URL;
+// echo $url;
+ ?>
+
+ <?php  if ($this->session->userdata('login')){?>
+   <?php $nick_name=ucfirst($this->session->userdata['nick']); ?>
+<h1 class="nick">Hola <?php echo $nick_name ?></h1>
+<h3 class="welcome">Bienvenido al sistema para la Panderia San Miguel <br>
+  ya que pudo inicar sesion se desplego un apartado nuevo <br>
+  en el cual podra visualizar todas las ventas realizadas <br>
+  con su fecha y demas datos.</h3>
+  <br>
+<!-- <button class="btn btn-warning btn-lg m-r-5 avanzar" type="button" name="button">Avanzar</button> -->
+<a class="btn btn-danger btn-lg m-r-5" style="letter-spacing:3px; font-family: 'Oswald', sans-serif;" href="<?php echo $url;?>login/logut#sesion">Cerrar sesion</a>
+ <?php }else{ ?>
+<h1> <?= $titulo ?></h1>
+<div class="user">
+  <form class="" action="<?php echo $url;?>login#sesion" method="POST" role="form">
+    <br>
+    <span class="fa fa-user fa-5x"></span>
+    <br>
+    <label class="form_usr" for="">Usuario:</label>
+    <br>
+    <input type="text" class="input_usr" name="usuario" placeholder="Nick o usuario" value="">
+    <br>
+    <label class="form_usr" for="">Contraseña</label>
+    <br>
+    <input type="password" class="input_usr" name="password" placeholder="Contraseña" value="">
+    <br><br>
+    <button class="btn btn-success" type="submit" name="button">Iniciar sesión</button>
+    <br>
+    <br>
+  </form>
+</div>
+<?php } ?>

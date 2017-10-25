@@ -1,0 +1,18 @@
+<h1 style="text-align:center;"> <?= $titulo ?></h1>
+<div class="reposte">
+  <label class="lab_name" for="">Nombre: </label>&nbsp;<input class="input_usr_rep" type="text" name="" placeholder="Nombre completo del cliente" value="">
+  <br><br>
+  <label class="lab_name" for="">Dirección: </label>&nbsp;<input class="input_usr_rep" type="text" name="" placeholder="Dirección completo del cliente" value="">
+  <br><br>
+  <label class="lab_name" for="">Tipo de pedido: </label>&nbsp;
+  <select style="width: 12%; display: -webkit-inline-box; padding: 5px 20px; margin: 0px 10px;" class="form-control selcls" id="tipos">
+    <option value="pastel">Pastel</option>
+    <option value="tarta">Tarta</option>
+    <option value="pay">Pay</option>
+  </select>
+</div>
+<script type="text/javascript">
+$("#tipos").click(function(event){
+  var tipos = $("#tipos").val(this);
+});
+</script>

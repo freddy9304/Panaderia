@@ -1,0 +1,34 @@
+<?php
+$url = BASE_URL;
+// echo "<pre>";
+// print_r($result);
+// echo "</pre>";
+ ?>
+<h1>Tabla de ventas</h1>
+<br>
+<div class="col-md-12">
+  <table class="table table-condensed col-md-12">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Tipo de Venta</th>
+            <th>Fecha de Venta</th>
+            <th>Total de Venta</th>
+        </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($result as $key => $value) {
+        ?>
+        <tr>
+          <td><?php echo $key+1 ?></td>
+          <td><?php echo $value->tipo_venta ?></td>
+          <td><?php echo $value->fecha_registro?></td>
+          <td><?php echo $value->total?></td>
+        </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+  <form action="<?php echo $url;?>excel_export/action" method="post">
+    <button class="btn btn-success fa fa-file-excel-o btn-lg m-r-5" type="submit" name="export"> Imprimir excel</button>
+  </form>
+</div>
