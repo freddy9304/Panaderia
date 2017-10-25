@@ -60,4 +60,22 @@ class Principal extends CI_Model
             return null;
           }
     }
+    public function principalModelChoco(){
+        $this->db->select('e.idextra, te.name_extra, pr.precio,te.idtipo_extra')->from('extra e')->join('tipo_extra te', 'e.idextra=te.idtipo')->join('precio pr', 'e.idprecio=pr.idprecio')->where('te.idtipo_extra=4');
+        $query = $this->db->get();
+          if ($query->num_rows() > 0) {
+            return $query->result();
+            }else{
+            return null;
+          }
+    }
+    public function principalModelRebanadas(){
+        $this->db->select('r.idreposteria, tr.name_reposteria, pr.precio,tr.idtipo_reposteria')->from('reposteria r')->join('tipo_reposteria tr', 'r.idreposteria=tr.idtipo')->join('precio pr', 'r.idprecio=pr.idprecio')->where('tr.idtipo_reposteria=1');
+        $query = $this->db->get();
+          if ($query->num_rows() > 0) {
+            return $query->result();
+            }else{
+            return null;
+          }
+    }
 }

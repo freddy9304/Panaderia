@@ -53,9 +53,24 @@ $url = BASE_URL;
     <div id="variosas" class="collapse varios hidden">
       <a data-toggle="modal" data-target="#leche" id="varioss" href="javascript:;" class="subbotones btn btn-lg m-r-5">Leche</a>
       <a data-toggle="modal" data-target="#cafe" id="cafess" href="javascript:;" class="subbotones btn btn-lg m-r-5">Cafe</a>
+      <a data-toggle="modal" data-target="#choco" id="chocoss" href="javascript:;" class="subbotones btn btn-lg m-r-5">Chocolate/Canela</a>
     </div>
   </div>
 
+  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 repos_pas_gen">
+    <div class="div-square">
+      <a data-toggle="collapse" data-target="#repost" id="repos" href="javascript:;" >
+        <img src="<?php echo $url; ?>assets/img/rebanadas.png" width="29%" alt="">
+        <h4>Reposteria</h4>
+      </a>
+    </div>
+    <div id="repost" class="collapse repos">
+      <a data-toggle="modal" data-target="#rebanadas" id="rebanadass" href="javascript:;" class="col-md-offset-1 col-md-4 col-md-offset-1 subbotones btn btn-lg m-r-5">Rebanadas</a>
+      <a data-toggle="modal" data-target="#gelatinas" id="gelatinass" href="javascript:;" class="col-md-offset-1 col-md-4 col-md-offset-1 subbotones btn btn-lg m-r-5">Gelatinas</a><br><br>
+      <a data-toggle="modal" data-target="#pasteles" id="pasteless" href="javascript:;" class="col-md-offset-1 col-md-4 col-md-offset-1 subbotones btn btn-lg m-r-5">Pasteles</a>
+      <a data-toggle="modal" data-target="#varios2" id="varios2s" href="javascript:;" class="col-md-offset-1 col-md-4 col-md-offset-1 subbotones btn btn-lg m-r-5">Varios</a>
+    </div>
+  </div>
 
 
   <div id="myModal" class="modal fade cierra" role="dialog">
@@ -70,7 +85,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result as $key => $value){ ?>
           <div class="col-md-6">
-          <p><?php echo $value->name_pan ?>: &nbsp;<input class="bolillo" type="number" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_pan ?>: &nbsp;<input class="bolillo" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
           <br>
         </div>
         <?php } ?>
@@ -82,7 +97,7 @@ $url = BASE_URL;
         <button class="delete btn btn-danger hidden" type="button" name="button">Eliminar total</button>
       </div>
       <div class="modal-footer">
-       <button type="button" class="btn btn-default cierra" data-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-danger cierra" data-dismiss="modal">Cerrar</button>
       </div>
      </div>
     </div>
@@ -101,7 +116,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_dulce as $key => $value){ ?>
           <div class="col-md-6">
-          <p><?php echo $value->name_pan ?>: &nbsp;<input class="dulce" type="number" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_pan ?>: &nbsp;<input class="dulce" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
           <br>
         </div>
         <?php } ?>
@@ -113,7 +128,7 @@ $url = BASE_URL;
         <button class="delete2 btn btn-danger hidden" type="button" name="button">Eliminar total</button>
       </div>
       <div class="modal-footer">
-       <button type="button" class="btn btn-default cierra" data-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-danger cierra" data-dismiss="modal">Cerrar</button>
       </div>
      </div>
     </div>
@@ -132,7 +147,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_repos as $key => $value){ ?>
           <div class="col-md-12">
-          <p><?php echo $value->name_pan ?>:<br> &nbsp; <input class="reposteria" type="number" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_pan ?>:<br> &nbsp; <input class="reposteria" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar3 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -143,7 +158,7 @@ $url = BASE_URL;
         <button class="delete3 btn btn-danger hidden" type="button" name="button">Eliminar total</button>
       </div>
       <div class="modal-footer">
-       <button type="button" class="btn btn-default cierra" data-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-danger cierra" data-dismiss="modal">Cerrar</button>
       </div>
      </div>
     </div>
@@ -162,7 +177,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_velas as $key => $value){ ?>
           <div class="col-md-12">
-          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="velas" type="number" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="velas" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar4 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -173,7 +188,7 @@ $url = BASE_URL;
         <button class="delete4 btn btn-danger hidden" type="button" name="button">Eliminar total</button>
       </div>
       <div class="modal-footer">
-       <button type="button" class="btn btn-default cierra" data-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-danger cierra" data-dismiss="modal">Cerrar</button>
       </div>
      </div>
     </div>
@@ -192,7 +207,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_leche as $key => $value){ ?>
           <div class="col-md-4">
-          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="leche" type="number" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="leche" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar5 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -203,7 +218,7 @@ $url = BASE_URL;
         <button class="delete5 btn btn-danger hidden" type="button" name="button">Eliminar total</button>
       </div>
       <div class="modal-footer">
-       <button type="button" class="btn btn-default cierra" data-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-danger cierra" data-dismiss="modal">Cerrar</button>
       </div>
      </div>
     </div>
@@ -222,7 +237,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_cafe as $key => $value){ ?>
           <div class="col-md-6">
-          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="cafe" type="number" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="cafe" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar6 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -233,7 +248,67 @@ $url = BASE_URL;
         <button class="delete6 btn btn-danger hidden" type="button" name="button">Eliminar total</button>
       </div>
       <div class="modal-footer">
-       <button type="button" class="btn btn-default cierra" data-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-danger cierra" data-dismiss="modal">Cerrar</button>
+      </div>
+     </div>
+    </div>
+    <!-- END container -->
+  </div>
+
+  <div id="choco" class="modal fade cierra" role="dialog">
+    <div class="modal-dialog" style="width:35%;">
+     <!-- Modal content-->
+     <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="cierra close" data-dismiss="modal">&times;</button>
+         <h4>Cocholate y Canela</h4>
+      </div>
+      <div class="modal-body">
+        <br>
+        <?php foreach ($result_choco as $key => $value){ ?>
+          <div class="col-md-6">
+          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="choco" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+        </div>
+        <?php } ?>
+        <button class="enviar7 btn btn-success hidden" type="button" name="button">Listo</button>
+        <br><br>
+        <div id="capa7">
+        </div>
+        <br>
+        <button class="delete7 btn btn-danger hidden" type="button" name="button">Eliminar total</button>
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn btn-danger cierra" data-dismiss="modal">Cerrar</button>
+      </div>
+     </div>
+    </div>
+    <!-- END container -->
+  </div>
+
+  <div id="rebanadas" class="modal fade cierra" role="dialog">
+    <div class="modal-dialog" style="width:35%;">
+     <!-- Modal content-->
+     <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="cierra close" data-dismiss="modal">&times;</button>
+         <h4>Rebanas Pastel</h4>
+      </div>
+      <div class="modal-body">
+        <br>
+        <?php foreach ($result_rebanadas as $key => $value){ ?>
+          <div class="col-md-6">
+          <p><?php echo $value->name_reposteria?>:<br>&nbsp; <input class="reban" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+        </div>
+        <?php } ?>
+        <button class="enviar8 btn btn-success hidden" type="button" name="button">Listo</button>
+        <br><br>
+        <div id="capa8">
+        </div>
+        <br>
+        <button class="delete8 btn btn-danger hidden" type="button" name="button">Eliminar total</button>
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn btn-danger cierra" data-dismiss="modal">Cerrar</button>
       </div>
      </div>
     </div>

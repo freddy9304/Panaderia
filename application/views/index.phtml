@@ -18,7 +18,8 @@ $url = BASE_URL;
 <div class="todo">
 <body>
     <div id="wrapper">
-       <div id="panaderia" class="navbar navbar-inverse_2">
+      <!-- Aqui se muestra el salvapantallas -->
+      <div id="panaderia" class="navbar navbar-inverse_2">
           <!-- <div class="adjust-nav_2">
               <h1>Panaderia San Miguel</h1>
           </div> -->
@@ -34,19 +35,20 @@ $url = BASE_URL;
         </div>
 
         <!-- /. NAV TOP  -->
-      <div id="loco" class="hidden">
+        <!-- Aqui finaliza el salvapantallas -->
+      <div id="loco" class="">
+        <!-- Aqui inicia el menu -->
         <nav class="navbar-default navbar-side col-lg-2" role="navigation">
           <div class="sidebar-collapse">
             <ul class="nav" id="main-menu">
-
-                <li href="#sesion" class="active-link">
-                  <a id="esconder1" href="<?php echo $url;?>user#sesion"> Administracion </a>
+                <li href="#sesion" >
+                  <a href="<?php echo $url;?>user#page-wrapper"> Administracion </a>
+                </li>
+                <li class="active-link" >
+                  <a id="esconder2" href="<?php echo $url;?>index#page-wrapper" > General </a>
                 </li>
                 <li>
-                  <a id="esconder2" href="<?php echo $url;?>index#sesion" > Panaderia </a>
-                </li>
-                <li>
-                  <a id="esconder3" href="<?php echo $url;?>reposteria#sesion">Pedidos de Pastel </a>
+                  <a id="esconder3" href="<?php echo $url;?>reposteria#page-wrapper">Pedidos de Pastel </a>
                   <!-- <a class="hidden" href="#sesion"></a> -->
                 </li>
                 <?php  if ($this->session->userdata('login')){?>
@@ -57,15 +59,17 @@ $url = BASE_URL;
             </ul>
           </div>
         </nav>
+        <!-- Aqui termina el menu -->
         <!-- /. NAV SIDE  -->
+        <!-- Aqui comienza el contenido -->
         <div id="page-wrapper" class="col-lg-8" >
           <div id="page-inner"  style="background-image:url(<?php echo $url?>assets/img/fondo.png); background-size:contain;" >
-            <div id="sesion" class="row text-center pad-top">
-
+            <div id="sesion" class=" row text-center pad-top">
               <?php $this->load->view($contenido); ?>
             </div>
           </div>
         </div>
+        <!-- Aqui termina el contenido -->
         <form method="POST" action="<?php echo $url;?>venta/insertar_venta">
         <div style="padding: 110px 20px; text-align: center; margin-left: 40px; font-family: 'Oswald', sans-serif;" class="col-lg-2">
           <table id="totales" style="width:100%">
@@ -116,6 +120,8 @@ var total_repos = 0;
 var total_velas = 0;
 var total_leche = 0;
 var total_cafe = 0;
+var total_choco = 0;
+var total_rebanadas = 0;
 
   $("#blanco").click(function(event){
     $(".unidades").removeClass("hidden");
@@ -279,6 +285,7 @@ var total_cafe = 0;
     $(".varios").removeClass("hidden");
     $(".enviar5").removeClass("hidden");
     $(".enviar6").removeClass("hidden");
+    $(".enviar7").removeClass("hidden");
   });
 
   $(".enviar5").click(function(event){
@@ -349,6 +356,81 @@ var total_cafe = 0;
     $("#ticket_imprimir").remove();
   });
 
+  $(".enviar7").click(function(event){
+    $(".choco").each(function(e){
+      var i = $(this).attr("data-precio");
+      var cantidad = $(this).val();
+      total_choco+= cantidad * i ;
+      // console.log(total_blanco);
+    });
+    var capa = document.getElementById("capa7");
+    var h3 = document.createElement("h3");
+    h3.id="chocot"
+    h3.innerHTML = 'El total de chocolate es: '+total_choco+'';
+    capa.appendChild(h3);
+
+    $('#totales tr:last').after('<tr id=7><td>Chocolate</td><td id="g">'+total_choco+'</td></tr>');
+    $(".venta").removeClass("disabled");
+    $(".delete7").removeClass("hidden");
+    $(".enviar7").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $(".delete7").click(function (event) {
+    total_choco = 0;
+    $(".delete7").addClass("hidden");
+    $("#chocot").remove();
+    $("#7").remove();
+    $(".enviar7").removeClass("disabled");
+    $(".venta").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $("#repos").click(function(event){
+    $(".repos").removeClass("hidden");
+    $(".enviar5").removeClass("hidden");
+    $(".enviar6").removeClass("hidden");
+    $(".enviar7").removeClass("hidden");
+  });
+
+  $(".enviar8").click(function(event){
+    $(".reban").each(function(e){
+      var i = $(this).attr("data-precio");
+      var cantidad = $(this).val();
+      total_rebanadas+= cantidad * i ;
+      // console.log(total_blanco);
+    });
+    var capa = document.getElementById("capa8");
+    var h3 = document.createElement("h3");
+    h3.id="rebanadast"
+    h3.innerHTML = 'El total de rebanadas es: '+total_rebanadas+'';
+    capa.appendChild(h3);
+
+    $('#totales tr:last').after('<tr id=8><td>Leche</td><td id="h">'+total_rebanadas+'</td></tr>');
+    $(".venta").removeClass("disabled");
+    $(".delete8").removeClass("hidden");
+    $(".enviar8").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
+  $(".delete8").click(function (event) {
+    total_rebanadas = 0;
+    $(".delete8").addClass("hidden");
+    $("#rebanadast").remove();
+    $("#8").remove();
+    $(".enviar8").removeClass("disabled");
+    $(".venta").addClass("disabled");
+    $("#total_gen").remove();
+    $("#ticket").remove();
+    $("#ticket_imprimir").remove();
+  });
+
   $(".venta").click(function(event){
     var a = $("#a").text() != "" ? parseFloat($("#a").text()):0;
     var b = $("#b").text() != "" ? parseInt($("#b").text()):0;
@@ -356,8 +438,9 @@ var total_cafe = 0;
     var d = $("#d").text() != "" ? parseInt($("#d").text()):0;
     var e = $("#e").text() != "" ? parseFloat($("#e").text()):0;
     var f = $("#f").text() != "" ? parseFloat($("#f").text()):0;
+    var g = $("#f").text() != "" ? parseFloat($("#g").text()):0;
 
-    var gen = a + b + c + d + e + f;
+    var gen = a + b + c + d + e + f + g;
 
     $('#to tr:last').after('<tr id="total_gen"><td>El total es</td><td style="text-align:center;">'+gen+'<input class="hidden" type="text" name="total_venta" value="'+gen+'"></td></tr>');
     $(".venta").addClass("disabled");
@@ -376,40 +459,25 @@ var total_cafe = 0;
     // console.log(hola);
   });
  //
-// $("#esconder1").click(function(){
-//   // setTimeout(function(){
-//   // if ($("#loco").hasClass("hidden")) {
-//     // $('#panaderia').addClass("hidden");
-//     // $('#loco').removeClass("hidden");
-//   // }else{
-//     // $('#panaderia').removeClass("hidden");
-//     // $('#loco').addClass("hidden");
-//   // }
-//     //  $('#panaderia').addClass("hidden");
-//     //  $('#loco').removeClass("hidden");
-//     alert("Hello");
-//     // }, 3000);
-// });
+$("#esconder1").click(function(){
+   $('#panaderia').addClass("hidden");
+   $('#loco').removeClass("hidden");
 
- $(document).ready(function(){
-  //  setTimeout(function(){
-  //    $('#panaderia').addClass("hidden");
-  //    $('#loco').removeClass("hidden");
-  //     // alert("Hello");
-  //   }, 3000);
-  $("body").keyup(function (e) {
-    if (e.keyCode == 66) {
-      if ($("#loco").hasClass("hidden")) {
-        $('#panaderia').addClass("hidden");
-        $('#loco').removeClass("hidden");
-      }else{
-        $('#panaderia').removeClass("hidden");
-        $('#loco').addClass("hidden");
-      }
-      // alert('Enter key pressed!');
-      // console.log(e.keyCode);
-    }
-  });
- });
+});
+
+ //
+ // $(document).ready(function(){
+ //  $("body").keyup(function (e) {
+    // if (e.keyCode == 66) {
+    //   if ($("#loco").hasClass("hidden")) {
+    //     $('#panaderia').addClass("hidden");
+    //     $('#loco').removeClass("hidden");
+    //   }else{
+    //     $('#panaderia').removeClass("hidden");
+    //     $('#loco').addClass("hidden");
+    //   }
+    // }
+ //  });
+ // });
 
 </script>
