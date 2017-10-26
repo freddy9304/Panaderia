@@ -78,4 +78,31 @@ class Principal extends CI_Model
             return null;
           }
     }
+    public function principalModelGelatinas(){
+        $this->db->select('r.idreposteria, tr.name_reposteria, pr.precio,tr.idtipo_reposteria')->from('reposteria r')->join('tipo_reposteria tr', 'r.idreposteria=tr.idtipo')->join('precio pr', 'r.idprecio=pr.idprecio')->where('tr.idtipo_reposteria=2');
+        $query = $this->db->get();
+          if ($query->num_rows() > 0) {
+            return $query->result();
+            }else{
+            return null;
+          }
+    }
+    public function principalModelPasteles(){
+        $this->db->select('r.idreposteria, tr.name_reposteria, pr.precio,tr.idtipo_reposteria')->from('reposteria r')->join('tipo_reposteria tr', 'r.idreposteria=tr.idtipo')->join('precio pr', 'r.idprecio=pr.idprecio')->where('tr.idtipo_reposteria=3');
+        $query = $this->db->get();
+          if ($query->num_rows() > 0) {
+            return $query->result();
+            }else{
+            return null;
+          }
+    }
+    public function principalModelVarios(){
+        $this->db->select('r.idreposteria, tr.name_reposteria, pr.precio,tr.idtipo_reposteria')->from('reposteria r')->join('tipo_reposteria tr', 'r.idreposteria=tr.idtipo')->join('precio pr', 'r.idprecio=pr.idprecio')->where('tr.idtipo_reposteria=4');
+        $query = $this->db->get();
+          if ($query->num_rows() > 0) {
+            return $query->result();
+            }else{
+            return null;
+          }
+    }
 }

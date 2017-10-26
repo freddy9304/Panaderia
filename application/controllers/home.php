@@ -19,6 +19,9 @@ class Home extends CI_Controller
       $data['result_cafe'] = $this->principal->principalModelCafe();
       $data['result_choco'] = $this->principal->principalModelChoco();
       $data['result_rebanadas'] = $this->principal->principalModelRebanadas();
+      $data['result_gelatinas'] = $this->principal->principalModelGelatinas();
+      $data['result_pasteles'] = $this->principal->principalModelPasteles();
+      $data['result_varios'] = $this->principal->principalModelVarios();
       $data['contenido'] = 'contenido/principal.phtml';
   		$this->load->view('index.phtml',$data);
   }
