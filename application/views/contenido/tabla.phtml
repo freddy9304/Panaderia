@@ -7,7 +7,7 @@ $url = BASE_URL;
 <h1>Tabla de ventas</h1>
 <br>
 <div class="col-md-12">
-  <table class="table table-condensed col-md-12">
+  <!-- <table id="example" class="table table-condensed col-md-12">
     <thead>
         <tr>
             <th>#</th>
@@ -27,8 +27,56 @@ $url = BASE_URL;
         </tr>
       <?php } ?>
     </tbody>
+  </table> -->
+
+
+  <table class="table table-striped table-bordered table-list" id="tabla">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Tipo de Venta</th>
+            <th>Fecha de Venta</th>
+            <th>Total de Venta</th>
+        </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($result as $key => $value) {
+        // print_r($result);
+        ?>
+        <tr>
+          <td><?php echo $key+1 ?></td>
+          <td><?php echo $value->tipo_venta ?></td>
+          <td><?php echo $value->fecha_registro?></td>
+          <td><?php echo $value->total?></td>
+        </tr>
+      <?php } ?>
+    </tbody>
   </table>
+
   <form action="<?php echo $url;?>excel_export/action" method="post">
     <button class="btn btn-success fa fa-file-excel-o btn-lg m-r-5" type="submit" name="export"> Imprimir excel</button>
   </form>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+      //  $('#tabla').dataTable( );
+     $('#tabla').DataTable( {
+
+              "ordering": true,
+              "language": {
+                    "zeroRecords": "No se encontró el registro",
+                    "info": "Página _PAGE_ de _PAGES_",
+                    "search": "Buscar: ",
+                    "lengthMenu": 'Mostrar _MENU_  registros',
+                    "infoFiltered": "(Encontrados de _MAX_ registros)",
+                        "paginate":{
+                          "previous": "Anterior",
+                          "next": "Siguiente"
+                        }
+              }
+            }  );
+
+    } );
+
+</script>

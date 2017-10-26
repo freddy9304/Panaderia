@@ -314,3 +314,95 @@ $url = BASE_URL;
     </div>
     <!-- END container -->
   </div>
+
+  <div id="gelatinas" class="modal fade cierra" role="dialog">
+    <div class="modal-dialog" style="width:35%;">
+     <!-- Modal content-->
+     <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="cierra close" data-dismiss="modal">&times;</button>
+         <h4>Gelatinas</h4>
+      </div>
+      <div class="modal-body">
+        <br>
+        <?php foreach ($result_gelatinas as $key => $value){ ?>
+          <div class="col-md-6">
+          <p><?php echo $value->name_reposteria?>:<br>&nbsp; <input class="gelat" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+        </div>
+        <?php } ?>
+        <button class="enviar9 btn btn-success hidden" type="button" name="button">Listo</button>
+        <br><br>
+        <div id="capa9">
+        </div>
+        <br>
+        <button class="delete9 btn btn-danger hidden" type="button" name="button">Eliminar total</button>
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn btn-danger cierra" data-dismiss="modal">Cerrar</button>
+      </div>
+     </div>
+    </div>
+    <!-- END container -->
+  </div>
+
+  <div id="pasteles" class="modal fade cierra" role="dialog">
+    <div class="modal-dialog" style="width:35%;">
+     <!-- Modal content-->
+     <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="cierra close" data-dismiss="modal">&times;</button>
+         <h4>Pestales</h4>
+      </div>
+      <div class="modal-body">
+        <br>
+        <?php foreach ($result_pasteles as $key => $value){ ?>
+          <div class="col-md-4">
+          <p><?php echo $value->name_reposteria?>:<br>&nbsp; <input class="pastel" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+        </div>
+        <?php } ?>
+        <button class="enviar10 btn btn-success hidden" type="button" name="button">Listo</button>
+        <br><br>
+        <div id="capa10">
+        </div>
+        <br>
+        <button class="delete10 btn btn-danger hidden" type="button" name="button">Eliminar total</button>
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn btn-danger cierra" data-dismiss="modal">Cerrar</button>
+      </div>
+     </div>
+    </div>
+    <!-- END container -->
+  </div>
+
+  <div id="varios2" class="modal fade cierra" role="dialog">
+    <div class="modal-dialog" style="width:35%;">
+     <!-- Modal content-->
+     <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="cierra close" data-dismiss="modal">&times;</button>
+         <h4>Varios</h4>
+      </div>
+      <div class="modal-body">
+        <br>
+        <?php foreach ($result_varios as $key => $value){
+          // echo "<pre>";print_r($result_varios);echo "</pre>";
+          ?>
+        <div class="col-md-6">
+          <p><?php echo $value->name_reposteria?>:<br>&nbsp; <input class="varios" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+        </div>
+        <?php } ?>
+        <button class="enviar11 btn btn-success hidden" type="button" name="button">Listo</button>
+        <br><br>
+        <div id="capa11">
+        </div>
+        <br>
+        <button class="delete11 btn btn-danger hidden" type="button" name="button">Eliminar total</button>
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn btn-danger cierra" data-dismiss="modal">Cerrar</button>
+      </div>
+     </div>
+    </div>
+    <!-- END container -->
+  </div>
