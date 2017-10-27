@@ -45,7 +45,7 @@ class Excel_export extends CI_Controller
       $excel_row++;
       $total_general+=$row->total;
     }
-    $object->getActiveSheet()->SetCellValue('A'.$excel_row,'total a mostrar');
+    $object->getActiveSheet()->SetCellValue('A'.$excel_row,'Total General');
     $object->getActiveSheet()->SetCellValue('D'.$excel_row, $total_general);
 
     $object_writer = PHPExcel_IOFactory::createWriter($object, 'Excel5');
