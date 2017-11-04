@@ -1,18 +1,69 @@
+<?php
+$num = array('0'=>'30','1'=>'50','2'=>'80','3'=>'100','4'=>'120','5'=>'150','6'=>'200','7'=>'250','8'=>'300','9'=>'350','10'=>'400','11'=>'450','12'=>'500');
+$relle_1 = array('0'=>'Durazno','1'=>'Fresa','2'=>'Nuez','3'=>'Cajeta','4'=>'Mango');
+$relle_2 = array('0'=>'Frutas mixtas naturales','1'=>'Flan napolitano','2'=>'Muss limon/chocolate','3'=>'Trufa','4'=>'Almendras','5'=>'Galleta oreo');
+$relle_3 = array('0'=>'Queso chess cake','1'=>'Chongos zamoranos','2'=>'Trufa','3'=>'Opera');
+?>
 <h1 style="text-align:center;"> <?= $titulo ?></h1>
 <div class="reposte">
   <label class="lab_name" for="">Nombre: </label>&nbsp;<input class="input_usr_rep" type="text" name="" placeholder="Nombre completo del cliente" value="">
   <br><br>
   <label class="lab_name" for="">Dirección: </label>&nbsp;<input class="input_usr_rep" type="text" name="" placeholder="Dirección completo del cliente" value="">
   <br><br>
-  <label class="lab_name" for="">Tipo de pedido: </label>&nbsp;
-  <select style="width: 12%; display: -webkit-inline-box; padding: 5px 20px; margin: 0px 10px;" class="form-control selcls" id="tipos">
-    <option value="pastel">Pastel</option>
-    <option value="tarta">Tarta</option>
-    <option value="pay">Pay</option>
-  </select>
+  <div class="gen_pastel">
+    <h3>Datos del pastel</h3>
+      <div class="col-md-4">
+        <label>Numero de personas:</label>
+        <select id="num_per" class="">
+          <?php foreach ($num as $key => $value){ ?>
+              <option class="num" value="<?php echo $value?>"><?php echo $value?></option>
+          <?php } ?>
+        </select>
+      </div>
+      <div class="col-md-4 col-md-offset-?4" id="capa">
+      </div>
+      <div class="col-md-12">
+        <br>
+        <label>Precio de relleno: </label>
+        <select class="" name="">
+          <option value="140">$140</option>
+          <option value="160">$160</option>
+          <option value="180">$180</option>
+        </select>
+      </div>
+      <div class="" id="relleno">
+      </div>
+      <div class="col-md-12">
+        <h3>Tipo de relleno:</h3>
+        <label>Precio de $140: </label>
+        <select class="" name="">
+          <?php foreach ($relle_1 as $key => $value){ ?>
+              <option class="num" value="<?php echo $value?>"><?php echo $value?></option>
+          <?php } ?>
+        </select>
+        <label>Precio de $160: </label>
+        <select class="" name="">
+          <?php foreach ($relle_2 as $key => $value){ ?>
+              <option class="num" value="<?php echo $value?>"><?php echo $value?></option>
+          <?php } ?>
+        </select>
+        <label>Precio de $180: </label>
+        <select class="" name="">
+          <?php foreach ($relle_3 as $key => $value){ ?>
+              <option class="num" value="<?php echo $value?>"><?php echo $value?></option>
+          <?php } ?>
+        </select>
+      </div>
+  </div>
 </div>
 <script type="text/javascript">
-$("#tipos").click(function(event){
-  var tipos = $("#tipos").val(this);
+$("#num_per").change(function(event){
+  var cantidad = $(this).val();
+  var kg = {'30':'3','50':'5','80':'8','100':'10','120':'12','150':'15','200':'20','250':'25','300':'30','350':'35','400':'40','450':'45','500':'50'};
+    if (kg[cantidad]) {
+      $("#capa").html("<label>Kg: </label>&nbsp;<input style='width:12%; height:2.5%;' type='text' value='"+kg[cantidad]+"'>");
+    }else{
+      console.log('fuera de la condicion');
+    }
 });
 </script>
