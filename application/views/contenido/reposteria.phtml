@@ -23,9 +23,9 @@ $num = array('0'=>'30','1'=>'50','2'=>'80','3'=>'100','4'=>'120','5'=>'150','6'=
 
         <label>Precio de relleno: </label>
         <select id="relle_pre" name="">
-          <option class="pre_ind" value="140">$140</option>
-          <option class="pre_ind" value="160">$160</option>
-          <option class="pre_ind" value="180">$180</option>
+          <option id="pre_1" value="140">$140</option>
+          <option id="pre_2" value="160">$160</option>
+          <option id="pre_3" value="180">$180</option>
         </select>
       </div>
       <h3>Tipo de relleno:</h3>
@@ -44,9 +44,12 @@ $num = array('0'=>'30','1'=>'50','2'=>'80','3'=>'100','4'=>'120','5'=>'150','6'=
         <select class="" id="relleno_3" name="">
         </select>
       </div>
-      <button class="col-md-offset-4 col-md-4 fin_repos btn btn-success" type="button" name="button">Listo</button>
-      <br><br>
-      <button class="col-md-offset-4 col-md-4 fin_repos_delete btn btn-danger hidden" type="button" name="button">Eliminar total</button>
+      <div class="col-md-offset-4 col-md-3">
+        <button class="fin_repos btn btn-success" type="button" name="button">Listo</button>
+      </div>
+      <div class="col-md-3">
+        <button class="fin_repos_delete btn btn-danger hidden" type="button" name="button">Eliminar total</button>
+      </div>
   </div>
 </div>
 <script type="text/javascript">
@@ -56,7 +59,7 @@ $("#num_per").change(function(event){
   var cantidad = $(this).val();
   var kg = {'30':'3','50':'5','80':'8','100':'10','120':'12','150':'15','200':'20','250':'25','300':'30','350':'35','400':'40','450':'45','500':'50'};
     if (kg[cantidad]) {
-      $("#capa").html("<label>Kg: </label>&nbsp;<input id='can' style='width:12%; height:2.5%;' type='text' value='"+kg[cantidad]+"'>");
+      $("#capa").html("<label>Kg: </label>&nbsp;<input id='cant' style='width:12%; height:2.5%;' type='text' value='"+kg[cantidad]+"'>");
     }
 });
 $("#relle_pre").change(function(event){
@@ -65,7 +68,7 @@ $("#relle_pre").change(function(event){
   var relle_1 = {'0':'Durazno','1':'Fresa','2':'Nuez','3':'Cajeta','4':'Mango'};
   var relle_2 = {'0':'Frutas mixtas naturales','1':'Galleta oreo','2':'Almendras','3':'Trufa','4':'Muss de limón / chocolate','5':'Flan napolitano'};
   var relle_3 = {'0':'Queso Chess Cake','1':'Chongos zamoranos','2':'Trufa','3':'Opera'};
-  console.log(precio);
+  // console.log(precio);
     if (precio=='140') {
       $(".140").removeClass("hidden");
       $(".160").addClass("hidden");
@@ -94,8 +97,11 @@ $("#relle_pre").change(function(event){
 });
 
 $(".fin_repos").click(function(event){
-  var can = $("#can").val();
+  var can = $("#cant").val();
+  var pre = $("#relle_pre").val();
+  // console.log(pre);
   $('#totales tr:last').after('<tr id="cantidad"><td>Kg de pastel</td><td id="can">'+can+'</td></tr>');
+  $('#totales tr:last').after('<tr id="precio_relle"><td>Precio de relleno</td><td id="pre">'+pre+'</td></tr>');
   // $('#totales table:after').append('<h4>Datos generales de la venta<h4>');
   $(".venta").removeClass("disabled");
   $(".fin_repos_delete").removeClass("hidden");
@@ -110,6 +116,7 @@ $(".fin_repos_delete").click(function (event) {
   $(".fin_repos_delete").addClass("hidden");
   // $("#variost").remove();
   $("#cantidad").remove();
+  $("#precio_relle").remove();
   $(".fin_repos").removeClass("disabled");
   $(".venta").addClass("disabled");
   $("#total_gen").remove();

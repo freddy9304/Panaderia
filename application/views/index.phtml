@@ -7,6 +7,7 @@ $url = BASE_URL;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
  <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.js" ></script>
+ <script type="text/javascript" src="assets/js/App.js" ></script>
  <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <!-- GOOGLE FONTS-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -575,10 +576,17 @@ var total_varios = 0;
     var i = $("#i").text() != "" ? parseFloat($("#i").text()):0;
     var j = $("#j").text() != "" ? parseFloat($("#j").text()):0;
     var k = $("#k").text() != "" ? parseFloat($("#k").text()):0;
+    var can = $("#can").text() != "" ? parseFloat($("#can").text()):0;
+    var pre = $("#pre").text() != "" ? parseFloat($("#pre").text()):0;
+    // console.log("ticket: ",can);
+    if (can && pre) {
+      var gen = can * pre;
+      $('#to tr:last').after('<tr id="total_gen"><td>El total de pasteleria</td><td style="text-align:center;">'+gen+'<input class="hidden" type="text" name="total_venta_paste" value="'+gen+'"></td></tr>');
+    }else{
+      var gen = a + b + c + d + e + f + g + h + i + j + k;
+      $('#to tr:last').after('<tr id="total_gen"><td>El total es</td><td style="text-align:center;">'+gen+'<input class="hidden" type="text" name="total_venta" value="'+gen+'"></td></tr>');
+    }
 
-    var gen = a + b + c + d + e + f + g + h + i + j + k;
-
-    $('#to tr:last').after('<tr id="total_gen"><td>El total es</td><td style="text-align:center;">'+gen+'<input class="hidden" type="text" name="total_venta" value="'+gen+'"></td></tr>');
     $(".venta").addClass("disabled");
     var imprimir = document.getElementById("imprimir");
     var ticket = document.createElement("button");

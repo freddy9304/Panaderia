@@ -43,18 +43,4 @@ class Login extends CI_Controller
     $this->session->sess_destroy();
     redirect(BASE_URL);
   }
-
-  public function tabla(){
-    $this->load->model("Excel_export_model");
-    $this->load->model('tablaModel');
-    $data = array('titulo' => 'Listado de Ventas');
-    $data['contenido'] = 'contenido/tabla.phtml';
-    $data['ventas_all'] = $this->Excel_export_model->fetch_data();
-    $data['result'] = $this->tablaModel->getVentasAll();
-    // print_r($data);die();
-    $this->session->set_userdata($data);
-    $this->load->view('index.phtml',$data);
-    // return get_defined_vars();
-    // $this->load->view('index.phtml', $datos);
-  }
 }
