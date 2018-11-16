@@ -1,0 +1,8 @@
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+#Elimina el index.php y da permisos a las carpetas que posteriormente sean agregadas
+#glyphicons-halflings-regular\.(ttf|otf|eot|woff|woff2)
+RewriteCond $1 !^(index\.php|robots\.txt|sitemap\.xml|assets)
+RewriteRule ^(.*)$ index.php/$1 [L]
+Header set Access-Control-Allow-Origin "*"
