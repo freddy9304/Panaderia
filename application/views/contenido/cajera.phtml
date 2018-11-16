@@ -1,0 +1,71 @@
+<?php
+$url = BASE_URL;
+?>
+<div class="" id="cajera">
+  <h1>Vista de la Caja</h1>
+  <div class="col-md-12" style="margin-top:5%;">
+    <label for="">Ingresar folio:</label>
+    <form method="POST" action="<?php echo $url;?>cajera#page-wrapper">
+      <input style="width:18%;" type="text" name="folio" value="<?php echo isset($result->folio)?$result->folio:''?>">
+      <button class="btn btn-success" type="submit" name="button">Buscar</button>
+    </form>
+    <?php if ($result=='') { ?>
+    </div>
+      <h2>Sin datos a mostrar</h2>
+    <?php }else{ ?>
+      <form class="" action="<?php echo $url;?>cajera#page-wrapper" method="post">
+        <div class="contenido" style="font-size:1.5em; margin-left:25%;">
+          <fieldset style="border: 4px solid #e1935b; width: 65%;"><br>
+            <input class="hidden" style="width:18%;" type="text" name="folio_cambio" value="<?php echo $result->folio?>">
+            <input class="hidden" style="width:18%;" type="text" name="optradio" value="1">
+            <label for="">Tipo de venta:</label>&nbsp;<label><?php echo $result->tipo_venta?></label><br>
+            <label for="">Fecha de la venta:</label>&nbsp;<label><?php echo $result->fecha_registro?></label><br>
+            <label for="">Total a pagar:</label>&nbsp;<input class="to_pa" style="width:18%;" type="number" name="total_pagar" value="<?php echo $result->total?>" disabled> <br><br>
+            <label for="">Cliente:</label>&nbsp;<input class="to_cli" min="<?php echo round($result->total)?>" max="999999999999" type="number" name="cliente_paga" value="" style="width:20%;"><br><br>
+            <div class="radio">
+             <input type="radio" name="optradio" value="2"><img src="<?php echo $url.'assets/img/visa.png'?>" width="12%" alt="">
+            </div>
+            <div class="radio">
+             <input type="radio" name="optradio" value="2"><img src="<?php echo $url.'assets/img/mastercard.png'?>" width="12%" alt="">
+            </div>
+            <!-- <button class="btn btn-warning cambio" type="button" name="submit">Cambio</button><br><br> -->
+            <label id="res_gen"></label><br><br>
+            <button id="send_res" class="disabled btn btn-info" type="submit" name="button">Confirmar</button><br>
+            <br>
+          </fieldset>
+        </div>
+      </form>
+    <?php } ?>
+</div>
+<script>
+$(document).ready(function() {
+  $('#main-menu,.btn_num,.table_total').remove();
+});
+// $('.cambio').on('click',function(){
+$('.radio').on('click', function(){
+  // console.log('radio dentro');
+  $('#send_res').removeClass('disabled');
+  $('.to_cli').attr('disabled',true);
+});
+$('.to_cli').change(function(){
+  var j = $('.to_cli').val();
+  var h = $('.to_pa').val();
+  var resta = j-h;
+  console.log(resta);
+  if (resta<0) {
+    // alert("Resultado invalido, ingresar total correcto");
+    document.getElementById("res_gen").innerHTML = "Dinero insuficiente";
+    // $('#send_res').removeClass('disabled');
+    $('.to_cli').removeAttr('disabled');
+  }else{
+    // console.log(resta);
+    document.getElementById("res_gen").innerHTML = "El cambio es: $"+resta;
+    $('#send_res').removeClass('disabled');
+    $('.to_cli').attr('disabled','disabled');
+  }
+});
+$('#send_res').on('click',function(){
+  alert("Venta finalizada");
+});
+// });
+</script>

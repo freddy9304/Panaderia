@@ -1,6 +1,11 @@
 <?php
 $url = BASE_URL;
 // print_r($this->route);
+// $general=$type_venta;
+//  echo "<pre>";
+//  print_r($re);
+// // var_dump($re);
+// echo "</pre>";
  ?>
 <head>
       <meta charset="utf-8" />
@@ -8,6 +13,7 @@ $url = BASE_URL;
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
  <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.js" ></script>
  <script type="text/javascript" src="assets/js/App.js" ></script>
+ <script type="text/javascript" src="assets/css/bootstrap.min.css" ></script>
  <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <!-- GOOGLE FONTS-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -56,14 +62,48 @@ $url = BASE_URL;
                 </li>
                 <li>
                   <a id="esconder3" href="<?php echo $url;?>reposteria#page-wrapper">Pedidos de Pastel </a>
-                  <!-- <a class="hidden" href="#sesion"></a> -->
                 </li>
                 <?php  if ($this->session->userdata('login')){?>
                <li>
                  <a href="<?php echo $url;?>tabla#sesion"> Tabla de ventas </a>
                </li>
+               <li>
+                 <a href="<?php echo $url;?>detalleVenta#sesion"> Detalle de ventas Pasteleria</a>
+               </li>
               <?php } ?>
+                <li>
+                  <form action="<?php echo $url;?>index#sesion" method="post">
+                    <label for="">¿Desea cancelar o bonificar a una cuenta?</label>
+                    <input class="cancel_fol" style="width:70%;" type="text" id="fol_cu" name="folio_cu" value="<?php echo isset($re->folio)?$re->folio:''?>">
+                    <button class="quest btn-success" type="submit" name="button">Buscar</button>
+                  </form>
+                  <?php if (isset($re)&&is_object($re)) { ?>
+                    <form class="" action="index#sesion" method="post">
+                      <input class="hidden" type="text" name="folio_cu" value="<?php echo isset($re->folio)?$re->folio:''?>">
+                      <input class="hidden" type="text" name="fecha_cu" value="<?php echo isset($re->fecha_registro)?$re->fecha_registro:''?>">
+                      <label class="pe" for="">Total $<?php echo isset($re->total)?$re->total:''?></label><br>
+                      <input class="hidden" type="text" id="total_cu" name="total_cu" value="<?php echo isset($re->total)?$re->total:''?>">
+                      <input class="pe" id="pe_fo" type="text" name="abono" value="" placeholder="Descontar">
+                      <button class="bon_can btn-success pe" disabled="disabled" type="submit" name="button">Enviar</button>
+                    </form>
+                  <?php } ?>
+                </li>
             </ul>
+          </div>
+          <br><br>
+          <div class="btn_num" style="font-family: Gelio, sans-serif; font-size: 2.5em;">
+            <button style="height:70px;" class="col-md-4 btn-info x" type="button" name="button" data-val="1">1</button>
+            <button style="height:70px;" class="col-md-4 btn-info x" type="button" name="button" data-val="2">2</button>
+            <button style="height:70px;" class="col-md-4 btn-info x" type="button" name="button" data-val="3">3</button>
+            <button style="height:70px;" class="col-md-4 btn-info x" type="button" name="button" data-val="4">4</button>
+            <button style="height:70px;" class="col-md-4 btn-info x" type="button" name="button" data-val="5">5</button>
+            <button style="height:70px;" class="col-md-4 btn-info x" type="button" name="button" data-val="6">6</button>
+            <button style="height:70px;" class="col-md-4 btn-info x" type="button" name="button" data-val="7">7</button>
+            <button style="height:70px;" class="col-md-4 btn-info x" type="button" name="button" data-val="8">8</button>
+            <button style="height:70px;" class="col-md-4 btn-info x" type="button" name="button" data-val="9">9</button>
+            <button style="height:70px;" class="col-md-4 btn-info x" type="button" name="button" data-val=".">.</button>
+            <button style="height:70px;" class="col-md-4 btn-info x" type="button" name="button" data-val="0">0</button>
+            <button style="height:70px;" class="col-md-4 btn-info x" type="button" name="button" data-val="-">-</button>
           </div>
         </nav>
         <!-- Aqui termina el menu -->
@@ -78,7 +118,7 @@ $url = BASE_URL;
         </div>
         <!-- Aqui termina el contenido -->
         <form method="POST" action="<?php echo $url;?>venta/insertar_venta">
-        <div style="padding: 110px 20px; text-align: center; margin-left: 40px; font-family: 'Oswald', sans-serif;" class="col-lg-2">
+        <div style="padding: 110px 20px; text-align: center; margin-left: 13px; font-family: 'Oswald', sans-serif;" class="col-lg-2 table_total">
           <table id="totales" style="width:100%">
             <caption>Total a pagar</caption>
             <br>
@@ -119,7 +159,6 @@ $url = BASE_URL;
 </body>
 </div>
 <script type="text/javascript">
-
 var total_blanco = 0;
 var total_dulce = 0;
 var total_repos = 0;
@@ -137,145 +176,174 @@ var total_varios = 0;
     $(".enviar").removeClass("hidden");
   });
 
-  $(".enviar").click(function(event){
-    $(".bolillo").each(function(e){
-    	var i = $(this).attr("data-precio");
-      var cantidad = $(this).val();
-      total_blanco+= cantidad * i ;
-      // console.log(total_blanco);
-    });
-
-    var capa = document.getElementById("capa");
-    // console.log(capa);
-    var h3 = document.createElement("h3");
-    h3.id="blanco_precio";
-    h3.innerHTML = 'El total de pan blanco es: '+total_blanco+'';
-    capa.appendChild(h3);
-
-    $('#totales tr:last').after('<tr id=1><td>Pan Blanco</td><td id="a">'+total_blanco+'</td></tr>');
-    $(".venta").removeClass("disabled");
-    $(".delete").removeClass("hidden");
-    $(".enviar").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
+  var total1 = 0;
+  $('.bolillo').change(function(){
+    total1 = resultado();
+    document.getElementById("capa").innerHTML = 'El total de pan blanco es: $'+total1+'';
+    // console.log("dentro del trigger del change");
   });
-
-  $(".delete").click(function (event) {
-     total_blanco = 0;
-      $(".delete").addClass("hidden");
-      $("#blanco_precio").remove();
-      $("#1").remove();
-      $(".enviar").removeClass("disabled");
-      $(".venta").addClass("disabled");
+  function resultado(){
+    total_blanco=0;
+    $(".bolillo").each(function(e){
+      var i = $(this).attr("data-precio");
+      var cantidad = $(this).val();
+      total_blanco+= cantidad * i;
+    });
+    return total_blanco;
+  }
+  $(".enviar").click(function(event){
+    $("#1").remove();
+    if (total1==0){
+    }else{
+      $('#totales tr:last').after('<tr id=1><td>Pan Blanco</td><td>$</td><td id="a">'+total1+'</td></tr>');
+      $(".venta").removeClass("disabled");
+      $(".delete").removeClass("hidden");
+      // $(".enviar").addClass("disabled");
       $("#total_gen").remove();
       $("#ticket").remove();
       $("#ticket_imprimir").remove();
+    }
+
   });
+
+  // $(".delete").click(function (event) {
+  //    total = 0;
+  //     $(".delete").addClass("hidden");
+  //     $("#blanco_precio").remove();
+  //     $("#1").remove();
+  //     $(".enviar").removeClass("disabled");
+  //     $(".venta").addClass("disabled");
+  //     $("#total_gen").remove();
+  //     $("#ticket").remove();
+  //     $("#ticket_imprimir").remove();
+  // });
 
   $("#dulce").click(function(event){
     $(".precios").removeClass("hidden");
     $(".enviar2").removeClass("hidden");
   });
-
-  $(".enviar2").click(function(event){
+  var total2 = 0;
+  $('.dulce').change(function(){
+    total2 = resultado2();
+    document.getElementById("capa2").innerHTML = 'El total de pan dulce es: $'+total2+'';
+  });
+  function resultado2(){
+    total_dulce=0;
     $(".dulce").each(function(e){
       var i = $(this).attr("data-precio");
       var cantidad = $(this).val();
       total_dulce+= cantidad * i ;
       // console.log(total_blanco);
     });
-    var capa = document.getElementById("capa2");
-    var h3 = document.createElement("h3");
-    h3.id="dulce_precio";
-    h3.innerHTML = 'El total de pan de dulce es: $'+total_dulce+'';
-    capa.appendChild(h3);
+    return total_dulce;
+  }
 
-    $('#totales tr:last').after('<tr id=2><td>Pan Dulce</td><td id="b">'+total_dulce+'</td></tr>');
-    $(".venta").removeClass("disabled");
-    $(".delete2").removeClass("hidden");
-    $(".enviar2").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
-  });
-
-  $(".delete2").click(function (event) {
-    total_dulce = 0;
-    $(".delete2").addClass("hidden");
-    $("#dulce_precio").remove();
+  $(".enviar2").click(function(event){
     $("#2").remove();
-    $(".enviar2").removeClass("disabled");
-    $(".venta").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
+    if (total2==0) {
+    }else{
+      $('#totales tr:last').after('<tr id=2><td>Pan Dulce</td><td>$</td><td id="b">'+total2+'</td></tr>');
+      $(".venta").removeClass("disabled");
+      $(".delete2").removeClass("hidden");
+      // $(".enviar2").addClass("disabled");
+      $("#total_gen").remove();
+      $("#ticket").remove();
+      $("#ticket_imprimir").remove();
+    }
   });
+
+  // $(".delete2").click(function (event) {
+  //   total_dulce = 0;
+  //   $(".delete2").addClass("hidden");
+  //   $("#dulce_precio").remove();
+  //   $("#2").remove();
+  //   $(".enviar2").removeClass("disabled");
+  //   $(".venta").addClass("disabled");
+  //   $("#total_gen").remove();
+  //   $("#ticket").remove();
+  //   $("#ticket_imprimir").remove();
+  // });
 
   $("#repos").click(function(event){
     $(".rebanadas").removeClass("hidden");
     $(".enviar3").removeClass("hidden");
   });
-
-  $(".enviar3").click(function(event){
+  var total3 = 0;
+  $('.reposteria').change(function(){
+    total3 = resultado3();
+    document.getElementById("capa3").innerHTML = 'El total de reposteria es: $'+total3+'';
+  });
+  function resultado3(){
+    total_repos=0;
     $(".reposteria").each(function(e){
       var i = $(this).attr("data-precio");
       var cantidad = $(this).val();
       total_repos+= cantidad * i ;
-      // console.log(total_blanco);
+      // console.log(tota);
     });
-    var capa = document.getElementById("capa3");
-    var h3 = document.createElement("h3");
-    h3.id="repost"
-    h3.innerHTML = 'El total de reposteria es: '+total_repos+'';
-    capa.appendChild(h3);
+    return total_repos;
+  }
 
-    $('#totales tr:last').after('<tr id=3><td>Reposteria</td><td id="c">'+total_repos+'</td></tr>');
-    $(".venta").removeClass("disabled");
-    $(".delete3").removeClass("hidden");
-    $(".enviar3").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
-  });
-
-  $(".delete3").click(function (event) {
-    total_repos = 0;
-    $(".delete3").addClass("hidden");
-    $("#repost").remove();
+  $(".enviar3").click(function(event){
     $("#3").remove();
-    $(".enviar3").removeClass("disabled");
-    $(".venta").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
+    if (total3==0) {
+    }else{
+      $('#totales tr:last').after('<tr id=3><td>Reposteria</td><td>$</td><td id="c">'+total3+'</td></tr>');
+      $(".venta").removeClass("disabled");
+      $(".delete3").removeClass("hidden");
+      // $(".enviar3").addClass("disabled");
+      $("#total_gen").remove();
+      $("#ticket").remove();
+      $("#ticket_imprimir").remove();
+    }
   });
+  //
+  // $(".delete3").click(function (event) {
+  //   total_repos = 0;
+  //   $(".delete3").addClass("hidden");
+  //   $("#repost").remove();
+  //   $("#3").remove();
+  //   $(".enviar3").removeClass("disabled");
+  //   $(".venta").addClass("disabled");
+  //   $("#total_gen").remove();
+  //   $("#ticket").remove();
+  //   $("#ticket_imprimir").remove();
+  // });
 
   $("#velas").click(function(event){
     $(".velas").removeClass("hidden");
     $(".enviar4").removeClass("hidden");
   });
 
-  $(".enviar4").click(function(event){
+  var total4 = 0;
+  $('.velas').change(function(){
+    total4 = resultado4();
+    document.getElementById("capa4").innerHTML = 'El total de velas es: $'+total4+'';
+  });
+  function resultado4(){
+    total_velas=0;
     $(".velas").each(function(e){
       var i = $(this).attr("data-precio");
       var cantidad = $(this).val();
       total_velas+= cantidad * i ;
-      // console.log(total_blanco);
+      // console.log(tota);
     });
-    var capa = document.getElementById("capa4");
-    var h3 = document.createElement("h3");
-    h3.id="velast"
-    h3.innerHTML = 'El total de velas es: '+total_velas+'';
-    capa.appendChild(h3);
+    return total_velas;
+  }
 
-    $('#totales tr:last').after('<tr id=4><td>Velas</td><td id="d">'+total_velas+'</td></tr>');
-    $(".venta").removeClass("disabled");
-    $(".delete4").removeClass("hidden");
-    $(".enviar4").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
+
+  $(".enviar4").click(function(event){
+    $("#4").remove();
+    if (total4==0) {
+    }else {
+      $('#totales tr:last').after('<tr id=4><td>Velas</td><td>$</td><td id="d">'+total4+'</td></tr>');
+      $(".venta").removeClass("disabled");
+      $(".delete4").removeClass("hidden");
+      // $(".enviar4").addClass("disabled");
+      $("#total_gen").remove();
+      $("#ticket").remove();
+      $("#ticket_imprimir").remove();
+    }
   });
 
   $(".delete4").click(function (event) {
@@ -297,60 +365,67 @@ var total_varios = 0;
     $(".enviar7").removeClass("hidden");
   });
 
-  $(".enviar5").click(function(event){
-    $(".leche").each(function(e){
-      var i = $(this).attr("data-precio");
-      var cantidad = $(this).val();
-      total_leche+= cantidad * i ;
-      // console.log(total_blanco);
-    });
-    var capa = document.getElementById("capa5");
-    var h3 = document.createElement("h3");
-    h3.id="lechet"
-    h3.innerHTML = 'El total de leche es: '+total_leche+'';
-    capa.appendChild(h3);
+  // $(".enviar5").click(function(event){
+  //   $(".leche").each(function(e){
+  //     var i = $(this).attr("data-precio");
+  //     var cantidad = $(this).val();
+  //     total_leche+= cantidad * i ;
+  //     // console.log(total_blanco);
+  //   });
+  //   var capa = document.getElementById("capa5");
+  //   var h3 = document.createElement("h3");
+  //   h3.id="lechet"
+  //   h3.innerHTML = 'El total de leche es: $'+total_leche+'';
+  //   capa.appendChild(h3);
+  //
+  //   $('#totales tr:last').after('<tr id=5><td>Leche</td><td>$</td><td id="e">'+total_leche+'</td></tr>');
+  //   $(".venta").removeClass("disabled");
+  //   $(".delete5").removeClass("hidden");
+  //   $(".enviar5").addClass("disabled");
+  //   $("#total_gen").remove();
+  //   $("#ticket").remove();
+  //   $("#ticket_imprimir").remove();
+  // });
+  //
+  // $(".delete5").click(function (event) {
+  //   total_leche = 0;
+  //   $(".delete5").addClass("hidden");
+  //   $("#lechet").remove();
+  //   $("#5").remove();
+  //   $(".enviar5").removeClass("disabled");
+  //   $(".venta").addClass("disabled");
+  //   $("#total_gen").remove();
+  //   $("#ticket").remove();
+  //   $("#ticket_imprimir").remove();
+  // });
 
-    $('#totales tr:last').after('<tr id=5><td>Leche</td><td id="e">'+total_leche+'</td></tr>');
-    $(".venta").removeClass("disabled");
-    $(".delete5").removeClass("hidden");
-    $(".enviar5").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
+  $('.cafe').change(function(){
+    total6 = resultado6();
+    document.getElementById("capa6").innerHTML = 'El total de cafe es: $'+total6+'';
   });
-
-  $(".delete5").click(function (event) {
-    total_leche = 0;
-    $(".delete5").addClass("hidden");
-    $("#lechet").remove();
-    $("#5").remove();
-    $(".enviar5").removeClass("disabled");
-    $(".venta").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
-  });
-
-  $(".enviar6").click(function(event){
+  function resultado6(){
+    total_cafe=0;
     $(".cafe").each(function(e){
       var i = $(this).attr("data-precio");
       var cantidad = $(this).val();
       total_cafe+= cantidad * i ;
-      // console.log(total_blanco);
+      // console.log(tota);
     });
-    var capa = document.getElementById("capa6");
-    var h3 = document.createElement("h3");
-    h3.id="cafet"
-    h3.innerHTML = 'El total de cafe es: '+total_cafe+'';
-    capa.appendChild(h3);
+    return total_cafe;
+  }
 
-    $('#totales tr:last').after('<tr id=6><td>Cafe</td><td id="f">'+total_cafe+'</td></tr>');
+  $(".enviar6").click(function(event){
+    $("#6").remove();
+    if (total6==0) {
+    }else{
+    $('#totales tr:last').after('<tr id=6><td>Cafe</td><td>$</td><td id="f">'+total_cafe+'</td></tr>');
     $(".venta").removeClass("disabled");
     $(".delete6").removeClass("hidden");
-    $(".enviar6").addClass("disabled");
+    // $(".enviar6").addClass("disabled");
     $("#total_gen").remove();
     $("#ticket").remove();
     $("#ticket_imprimir").remove();
+  }
   });
 
   $(".delete6").click(function (event) {
@@ -365,26 +440,34 @@ var total_varios = 0;
     $("#ticket_imprimir").remove();
   });
 
-  $(".enviar7").click(function(event){
+  $('.choco').change(function(){
+    total7 = resultado7();
+    document.getElementById("capa7").innerHTML = 'El total de Chocolate es: $'+total7+'';
+  });
+
+  function resultado7(){
+    total_choco=0;
     $(".choco").each(function(e){
       var i = $(this).attr("data-precio");
       var cantidad = $(this).val();
       total_choco+= cantidad * i ;
       // console.log(total_blanco);
     });
-    var capa = document.getElementById("capa7");
-    var h3 = document.createElement("h3");
-    h3.id="chocot"
-    h3.innerHTML = 'El total de chocolate es: '+total_choco+'';
-    capa.appendChild(h3);
+    return total_choco;
+  }
 
-    $('#totales tr:last').after('<tr id=7><td>Chocolate</td><td id="g">'+total_choco+'</td></tr>');
-    $(".venta").removeClass("disabled");
-    $(".delete7").removeClass("hidden");
-    $(".enviar7").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
+  $(".enviar7").click(function(event){
+    $("#7").remove();
+      if (total7==0) {
+    }else{
+      $('#totales tr:last').after('<tr id=7><td>Chocolate</td><td>$</td><td id="g">'+total_choco+'</td></tr>');
+      $(".venta").removeClass("disabled");
+      $(".delete7").removeClass("hidden");
+      // $(".enviar7").addClass("disabled");
+      $("#total_gen").remove();
+      $("#ticket").remove();
+      $("#ticket_imprimir").remove();
+    }
   });
 
   $(".delete7").click(function (event) {
@@ -407,26 +490,34 @@ var total_varios = 0;
     $(".enviar11").removeClass("hidden");
   });
 
-  $(".enviar8").click(function(event){
+  $('.reban').change(function(){
+    total8 = resultado8();
+    document.getElementById("capa8").innerHTML = 'El total de Rebanadas es: $'+total8+'';
+  });
+
+  function resultado8(){
+    total_rebanadas=0;
     $(".reban").each(function(e){
       var i = $(this).attr("data-precio");
       var cantidad = $(this).val();
       total_rebanadas+= cantidad * i ;
       // console.log(total_blanco);
     });
-    var capa = document.getElementById("capa8");
-    var h3 = document.createElement("h3");
-    h3.id="rebanadast"
-    h3.innerHTML = 'El total de rebanadas es: '+total_rebanadas+'';
-    capa.appendChild(h3);
+    return total_rebanadas;
+  }
 
-    $('#totales tr:last').after('<tr id=8><td>Rebanadas</td><td id="h">'+total_rebanadas+'</td></tr>');
-    $(".venta").removeClass("disabled");
-    $(".delete8").removeClass("hidden");
-    $(".enviar8").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
+  $(".enviar8").click(function(event){
+      $("#8").remove();
+    if (total8==0) {
+    }else {
+      $('#totales tr:last').after('<tr id=8><td>Rebanadas</td><td>$</td><td id="h">'+total_rebanadas+'</td></tr>');
+      $(".venta").removeClass("disabled");
+      $(".delete8").removeClass("hidden");
+      // $(".enviar8").addClass("disabled");
+      $("#total_gen").remove();
+      $("#ticket").remove();
+      $("#ticket_imprimir").remove();
+    }
   });
 
   $(".delete8").click(function (event) {
@@ -446,26 +537,34 @@ var total_varios = 0;
     $(".enviar9").removeClass("hidden");
   });
 
-  $(".enviar9").click(function(event){
+  $('.gelat').change(function(){
+    total9 = resultado9();
+    document.getElementById("capa9").innerHTML = 'El total de Rebanadas es: $'+total9+'';
+  });
+
+  function resultado9(){
+    total_gelatinas=0;
     $(".gelat").each(function(e){
       var i = $(this).attr("data-precio");
       var cantidad = $(this).val();
       total_gelatinas+= cantidad * i ;
       // console.log(total_blanco);
     });
-    var capa = document.getElementById("capa9");
-    var h3 = document.createElement("h3");
-    h3.id="gelatinast"
-    h3.innerHTML = 'El total de gelatinas es: '+total_gelatinas+'';
-    capa.appendChild(h3);
+    return total_gelatinas;
+  }
 
-    $('#totales tr:last').after('<tr id=9><td>Gelatinas</td><td id="i">'+total_gelatinas+'</td></tr>');
-    $(".venta").removeClass("disabled");
-    $(".delete9").removeClass("hidden");
-    $(".enviar9").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
+  $(".enviar9").click(function(event){
+    $("#9").remove();
+      if (total9==0) {
+    }else {
+      $('#totales tr:last').after('<tr id=9><td>Gelatinas</td><td>$</td><td id="i">'+total_gelatinas+'</td></tr>');
+      $(".venta").removeClass("disabled");
+      $(".delete9").removeClass("hidden");
+      // $(".enviar9").addClass("disabled");
+      $("#total_gen").remove();
+      $("#ticket").remove();
+      $("#ticket_imprimir").remove();
+    }
   });
 
   $(".delete9").click(function (event) {
@@ -485,26 +584,34 @@ var total_varios = 0;
     $(".enviar10").removeClass("hidden");
   });
 
-  $(".enviar10").click(function(event){
+  $('.pastel').change(function(){
+    total10 = resultado10();
+    document.getElementById("capa10").innerHTML = 'El total de Rebanadas es: $'+total10+'';
+  });
+
+  function resultado10(){
+    total_pasteles=0;
     $(".pastel").each(function(e){
       var i = $(this).attr("data-precio");
       var cantidad = $(this).val();
       total_pasteles+= cantidad * i ;
       // console.log(total_blanco);
     });
-    var capa = document.getElementById("capa10");
-    var h3 = document.createElement("h3");
-    h3.id="pastelest"
-    h3.innerHTML = 'El total de pasteles es: '+total_pasteles+'';
-    capa.appendChild(h3);
+    return total_pasteles;
+  }
 
-    $('#totales tr:last').after('<tr id=10><td>Pasteles</td><td id="j">'+total_pasteles+'</td></tr>');
-    $(".venta").removeClass("disabled");
-    $(".delete10").removeClass("hidden");
-    $(".enviar10").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
+  $(".enviar10").click(function(event){
+    $("#10").remove();
+      if (total10==0) {
+    }else {
+      $('#totales tr:last').after('<tr id=10><td>Pasteles</td><td>$</td><td id="j">'+total_pasteles+'</td></tr>');
+      $(".venta").removeClass("disabled");
+      $(".delete10").removeClass("hidden");
+//      $(".enviar10").addClass("disabled");
+      $("#total_gen").remove();
+      $("#ticket").remove();
+      $("#ticket_imprimir").remove();
+    }
   });
 
   $(".delete10").click(function (event) {
@@ -512,7 +619,7 @@ var total_varios = 0;
     $(".delete10").addClass("hidden");
     $("#pastelest").remove();
     $("#10").remove();
-    $(".enviar10").removeClass("disabled");
+    //$(".enviar10").removeClass("disabled");
     $(".venta").addClass("disabled");
     $("#total_gen").remove();
     $("#ticket").remove();
@@ -523,32 +630,40 @@ var total_varios = 0;
     $(".repos").removeClass("hidden");
     $(".enviar11").removeClass("hidden");
   });
+  $('.varios').change(function(){
+    total11 = resultado11();
+    document.getElementById("capa11").innerHTML = 'El total de Varios es: $'+total11+'';
+  });
 
-  $(".enviar11").click(function(event){
+  function resultado11(){
+    total_varios=0;
     $(".varios").each(function(e){
       var i = $(this).attr("data-precio");
       var cantidad = $(this).val();
       if (i==undefined) {
         i=0;
-        console.log("cantidad: "+cantidad+" y precio: "+i );
+        // console.log("cantidad: "+cantidad+" y precio: "+i );
       }else{
         total_varios+= cantidad * i ;
-        console.log("cantidad: "+cantidad+" y precio: "+i );
+        // console.log("cantidad: "+cantidad+" y precio: "+i );
       }
     });
-    var capa = document.getElementById("capa11");
-    var h3 = document.createElement("h3");
-    h3.id="variost"
-    h3.innerHTML = 'El total de varios es: '+total_varios+'';
-    capa.appendChild(h3);
+    return total_varios;
+  }
 
-    $('#totales tr:last').after('<tr id=11><td>Varios</td><td id="k">'+total_varios+'</td></tr>');
-    $(".venta").removeClass("disabled");
-    $(".delete11").removeClass("hidden");
-    $(".enviar11").addClass("disabled");
-    $("#total_gen").remove();
-    $("#ticket").remove();
-    $("#ticket_imprimir").remove();
+
+  $(".enviar11").click(function(event){
+    $("#11").remove();
+      if (total11==0) {
+    }else {
+      $('#totales tr:last').after('<tr id=11><td>Varios</td><td>$</td><td id="k">'+total11+'</td></tr>');
+      $(".venta").removeClass("disabled");
+      $(".delete11").removeClass("hidden");
+      // $(".enviar11").addClass("disabled");
+      $("#total_gen").remove();
+      $("#ticket").remove();
+      $("#ticket_imprimir").remove();
+    }
   });
 
   $(".delete11").click(function (event) {
@@ -578,13 +693,34 @@ var total_varios = 0;
     var k = $("#k").text() != "" ? parseFloat($("#k").text()):0;
     var can = $("#can").text() != "" ? parseFloat($("#can").text()):0;
     var pre = $("#pre").text() != "" ? parseFloat($("#pre").text()):0;
-    // console.log("ticket: ",can);
-    if (can && pre) {
-      var gen = can * pre;
-      $('#to tr:last').after('<tr id="total_gen"><td>El total de pasteleria</td><td style="text-align:center;">'+gen+'<input class="hidden" type="text" name="total_venta_paste" value="'+gen+'"></td></tr>');
+    var nom = $("#nom").text() != "" ? $("#nom").text():0;
+    var dir = $("#dir").text() != "" ? $("#dir").text():0;
+    var corr = $("#corr").text() != "" ? $("#corr").text():0;
+    var espe = $("#espe").text() != "" ? $("#espe").text():0;
+    var base = $("#bas").text() != "" ? $("#bas").text():0;
+    var anticipo = $("#ant").text() != "" ? $("#ant").text():0;
+    var rell = $("#rell").text() != "" ? $("#rell").text():0;
+    var cel = $("#cel").text() != "" ? $("#cel").text():0;
+    var num = $("#num").text() != "" ? $("#num").text():0;
+    console.log('base: ',base);
+    if (can && pre && nom && dir && rell && num && espe && corr && cel && base) {
+      var gen = parseInt(parseInt(can * pre) + parseInt(base)) - parseInt(anticipo);
+      // console.log('total:',gen);
+      // console.log('total y base', parseInt(gen) + parseInt(base));
+      $('#to tr:last').after('<tr id="total_gen"><td>El total de pasteleria</td><td>$</td><td style="text-align:center;">'+gen+'<input class="hidden" type="text" name="total_venta_paste" value="'+gen+'"></td></tr>');
+      $('#to tr:last').after('<input class="hidden" type="text" name="total_venta_nom" value="'+nom+'">');
+      $('#to tr:last').after('<input class="hidden" type="text" name="total_venta_dir" value="'+dir+'">');
+      $('#to tr:last').after('<input class="hidden" type="text" name="total_venta_espe2" value="'+espe+'">');
+      $('#to tr:last').after('<input class="hidden" type="text" name="total_venta_correo2" value="'+corr+'">');
+      $('#to tr:last').after('<input class="hidden" type="text" name="total_venta_relle" value="'+rell+'">');
+      $('#to tr:last').after('<input class="hidden" type="text" name="total_venta_base" value="'+base+'">');
+      $('#to tr:last').after('<input class="hidden" type="text" name="total_venta_anti" value="'+anticipo+'">');
+      $('#to tr:last').after('<input class="hidden" type="text" name="total_venta_num" value="'+num+'">');
+      $('#to tr:last').after('<input class="hidden" type="text" name="total_venta_cel" value="'+cel+'">');
+      $('#to tr:last').after('<input class="hidden" type="text" name="total_venta_can" value="'+can+'">');
     }else{
       var gen = a + b + c + d + e + f + g + h + i + j + k;
-      $('#to tr:last').after('<tr id="total_gen"><td>El total es</td><td style="text-align:center;">'+gen+'<input class="hidden" type="text" name="total_venta" value="'+gen+'"></td></tr>');
+      $('#to tr:last').after('<tr id="total_gen"><td>El total es</td><td>$</td><td style="text-align:center;">'+gen+'<input class="hidden" type="text" name="total_venta" value="'+gen+'"></td></tr>');
     }
 
     $(".venta").addClass("disabled");
@@ -602,11 +738,31 @@ var total_varios = 0;
     var hola = confirm("¿Desea finalizar la venta e imprimir el ticket de compra?");
     // console.log(hola);
   });
- //
+
+  $(".bon_can").click(function(event){
+    var hola = confirm("¿Desea bonificar o cancelar la cuenta e imprimir otro ticket?");
+    $('.pe').hide();
+  });
+
+  // $(".quest").click(function(){
+  //   // $(".pe").removeClass("hidden");
+  // });
+
 $("#esconder1").click(function(){
    $('#panaderia').addClass("hidden");
    $('#loco').removeClass("hidden");
 
+});
+
+$("#pe_fo").change(function(){
+  var t = $(this).val();
+  var g = $("#total_cu").val();
+  if (t<=g) {
+     $('.pe').removeAttr("disabled");
+  }else{
+    alert("No puede devolver una cantidad mayor al total")
+    $('.pe').attr("disabled","disabled");
+  }
 });
 
  //

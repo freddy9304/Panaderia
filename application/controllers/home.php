@@ -6,10 +6,10 @@
 class Home extends CI_Controller
 {
 
-  public function index(){
+  public function index($folio_cu=''){
     // die("dentro de index");
       // $this->session->sess_destroy();
-
+      $this->load->model("VentaM");
       $this->load->model('principal');
       $data['result'] = $this->principal->principalModel();
       $data['result_dulce'] = $this->principal->principalModelDulce();
@@ -22,8 +22,27 @@ class Home extends CI_Controller
       $data['result_gelatinas'] = $this->principal->principalModelGelatinas();
       $data['result_pasteles'] = $this->principal->principalModelPasteles();
       $data['result_varios'] = $this->principal->principalModelVarios();
-      $data['contenido'] = 'contenido/principal.phtml';
-  		$this->load->view('index.phtml',$data);
+      $folio_cu = $this->input->post('folio_cu');
+      $total_cu = $this->input->post('total_cu');
+      $abono = $this->input->post('abono');
+      $fecha_cu = $this->input->post('fecha_cu');
+      // print_r($fecha_cu);die();
+      if ($total_cu && $abono) {
+        if ($abono==$total_cu) {
+          $abono=$total_cu;
+          $this->VentaM->boniCancel($folio_cu,$abono,$total_cu);
+          $data['contenido'] = 'contenido/principal.phtml';
+          $this->load->view('index.phtml',$data);
+        }else{
+          $data['re'] = $this->VentaM->boniCancel($folio_cu,$abono,$total_cu,$fecha_cu);
+          $data['contenido'] = 'contenido/principal.phtml';
+          $this->load->view('index.phtml',$data);
+        }
+      }else{
+        $data['re'] = $this->VentaM->boniCancelModel($folio_cu);
+        $data['contenido'] = 'contenido/principal.phtml';
+        $this->load->view('index.phtml',$data);
+      }
   }
   public function user(){
       $data = array('titulo' => 'Inicio de sesión');
@@ -36,4 +55,11 @@ class Home extends CI_Controller
       $data['contenido'] = 'contenido/reposteria.phtml';
       $this->load->view('index.phtml',$data);
   }
+  // public function boni_cancel(){
+  //   $folio_cu = $this->input->post('folio_cu');
+  //   // $data = array('titulo' => 'Apartado de Reposteria');
+  //   $data['result'] = $this->VentaM->boniCancelModel($folio_cu);
+  //   // $data['contenido'] = 'contenido/principal.phtml';
+  //   // $this->load->view('index.phtml',$data);
+  // }
 }

@@ -4,74 +4,236 @@ $url = BASE_URL;
 // echo "<pre>";
 // print_r($result[0]);
 // echo "</pre>";
-
  ?>
-  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" id="blanco_gen">
+ <style >
+   #capa,#capa2,#capa3,#capa4,#capa6,#capa7,#capa8,#capa9,#capa10{
+     font-size: 1.3em;
+   }
+ </style>
+  <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" id="blanco_gen">
     <div class="div-square">
       <a data-toggle="modal" data-target="#myModal" id="blanco" href="javascript:;">
         <img src="<?php echo $url; ?>assets/img/bolillo.png" width="150px" alt="">
         <h4>Pan blanco</h4>
       </a>
     </div>
+  </div> -->
+
+  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" data-toggle="collapse" href="#collapseExample" id="blanco_gen">
+    <div class="div-square">
+      <a data-toggle="collapse" href="#collapseExample" id="blanco" >
+        <img src="<?php echo $url; ?>assets/img/bolillo.png" width="150px" alt="">
+        <h4>Pan blanco</h4>
+      </a>
+    </div>
+  </div>
+  <div class="collapse col-md-8" id="collapseExample">
+    <div class="card card-body">
+      <?php foreach ($result as $key => $value){ ?>
+        <div class="col-md-4">
+        <p id="sales">Panes de $<?php echo $value->precio ?>: &nbsp;<input class="bolillo" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad1<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+        <br>
+      </div>
+      <?php } ?>
+    </div>
+    <br><br>
+    <div id="capa">
+    </div>
+    <br>
+    <button class="enviar btn btn-success hidden" type="button" name="button">Listo</button>
+    <br><br>
+    <!-- <button class="delete btn btn-danger hidden" type="button" name="button">Eliminar total</button> -->
   </div>
 
-  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 dulce_gen">
+  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 dulce_gen" data-toggle="collapse" href="#collapseExample2">
     <div class="div-square">
-       <a data-toggle="modal" data-target="#myModal2" id="dulce" href="javascript:;" >
+       <a data-toggle="collapse" href="#collapseExample2" id="dulce">
          <img src="<?php echo $url; ?>assets/img/fotopandulce.png" width="172px" alt="">
          <h4>Pan de Dulce</h4>
        </a>
     </div>
   </div>
+  <div class="collapse col-md-8" id="collapseExample2">
+    <div class="card card-body">
+      <?php foreach ($result_dulce as $key => $value){ ?>
+        <div class="col-md-4">
+        <p>Panes de $<?php echo $value->precio ?>: &nbsp;<input class="dulce" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad2<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+        <br>
+      </div>
+      <?php } ?>
+    </div>
+    <div id="capa2">
+    </div>
+    <br>
+    <button class="enviar2 btn btn-success hidden" type="button" name="button">Listo</button>
+    <br>
+    <!-- <button class="delete2 btn btn-danger hidden" type="button" name="button">Eliminar total</button> -->
+  </div>
 
-  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 repos_gen">
+  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 repos_gen" data-toggle="collapse" href="#collapseExample3" >
     <div class="div-square">
-      <a data-toggle="modal" data-target="#myModal3" id="repos" href="javascript:;" >
-        <img src="<?php echo $url; ?>assets/img/reposteria1.png" width="47%" alt="">
+      <a data-toggle="collapse" data-target="#collapseExample3" id="repos">
+        <img src="<?php echo $url; ?>assets/img/reposteria1.png" width="52%" alt="">
         <h4>Pan de Reposteria</h4>
       </a>
     </div>
   </div>
+  <div class="collapse col-md-8" id="collapseExample3">
+    <div class="card card-body">
+      <?php foreach ($result_repos as $key => $value){ ?>
+        <div class="col-md-4">
+        <p>Panes de $<?php echo $value->precio ?>: &nbsp;<input class="reposteria" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad3<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+        <br>
+      </div>
+      <?php } ?>
+    </div>
+    <br><br>
+    <div id="capa3">
+    </div>
+    <br><br>
+    <button class="enviar3 btn btn-success hidden" type="button" name="button">Listo</button>
+    <br><br>
+    <!-- <button class="delete3 btn btn-danger hidden" type="button" name="button">Eliminar total</button> -->
+  </div>
 
-  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 velas_gen">
+  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 velas_gen" data-toggle="collapse" href="#collapseExample4" >
     <div class="div-square">
-      <a data-toggle="modal" data-target="#myModal4" id="velas" href="javascript:;" >
+      <a data-toggle="collapse" href="#collapseExample4" id="velas">
         <img src="<?php echo $url; ?>assets/img/velas3.png" width="35%" alt="">
         <h4>Decoración</h4>
       </a>
     </div>
   </div>
+  <div class="collapse col-md-8" id="collapseExample4">
+    <div class="card card-body">
+      <?php foreach ($result_velas as $key => $value){ ?>
+        <div class="col-md-4">
+        <p>Velas de $<?php echo $value->precio?>:<br>&nbsp; <input class="velas" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad4<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+      </div>
+      <?php } ?>
+    </div>
+    <br><br><br>
+    <div id="capa4">
+    </div>
+    <br>
+    <button class="enviar4 btn btn-success hidden" type="button" name="button">Listo</button>
+    <br><br>
+    <!-- <button class="delete4 btn btn-danger hidden" type="button" name="button">Eliminar total</button> -->
+  </div>
 
   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 varios_gen">
     <div class="div-square">
       <a data-toggle="collapse" data-target="#variosas" id="varios" href="javascript:;" >
-        <img src="<?php echo $url; ?>assets/img/leche.png" width="32.5%" alt="">
+        <!-- <img src="<?php echo $url; ?>assets/img/leche.png" width="32.5%" alt=""> -->
         <img src="<?php echo $url; ?>assets/img/cafe.png" width="24%" alt="">
         <h4>Varios</h4>
       </a>
     </div>
     <div id="variosas" class="collapse varios hidden">
-      <a data-toggle="modal" data-target="#leche" id="varioss" href="javascript:;" class="subbotones btn btn-lg m-r-5">Leche</a>
-      <a data-toggle="modal" data-target="#cafe" id="cafess" href="javascript:;" class="subbotones btn btn-lg m-r-5">Cafe</a>
-      <a data-toggle="modal" data-target="#choco" id="chocoss" href="javascript:;" class="subbotones btn btn-lg m-r-5">Chocolate/Canela</a>
+      <!-- <a data-toggle="modal" data-target="#leche" id="varioss" href="javascript:;" class="subbotones btn btn-lg m-r-5">Leche</a> -->
+      <a data-toggle="collapse" href="#collapseExample5" id="cafess" class="subbotones btn btn-lg m-r-5">Cafe</a>
+      <a data-toggle="collapse" href="#collapseExample6" id="chocoss" class="subbotones btn btn-lg m-r-5">Chocolate/Canela</a>
     </div>
   </div>
+  <div class="collapse col-md-8" id="collapseExample5">
+    <br>
+    <?php foreach ($result_cafe as $key => $value){ ?>
+      <div class="col-md-6">
+      <p>Cafe de $<?php echo $value->precio?>:<br>&nbsp; <input class="cafe" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad5<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+    </div>
+    <?php } ?>
+    <div id="capa6">
+    </div>
+    <br>
+    <button class="enviar6 btn btn-success hidden" type="button" name="button">Listo</button>
+    <br><br>
+    <!-- <button class="delete6 btn btn-danger hidden" type="button" name="button">Eliminar total</button> -->
+  </div>
+  <div class="collapse col-md-8" id="collapseExample6">
+    <br>
+    <?php foreach ($result_choco as $key => $value){ ?>
+      <div class="col-md-6">
+      <p>Chocolate de $<?php echo $value->precio?>:<br>&nbsp; <input class="choco" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad6<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+    </div>
+    <?php } ?>
+    <div id="capa7">
+    </div>
+    <br>
+    <button class="enviar7 btn btn-success hidden" type="button" name="button">Listo</button>
+    <br>
+    <!-- <button class="delete7 btn btn-danger hidden" type="button" name="button">Eliminar total</button> -->
+  </div>
+
 
   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 repos_pas_gen">
     <div class="div-square">
-      <a data-toggle="collapse" data-target="#repost" id="repos" href="javascript:;" >
+      <a data-toggle="collapse" data-target="#re_pas" id="reposttt" >
         <img src="<?php echo $url; ?>assets/img/rebanadas.png" width="29%" alt="">
         <h4>Reposteria</h4>
       </a>
     </div>
-    <div id="repost" class="collapse repos">
-      <a data-toggle="modal" data-target="#rebanadas" id="rebanadass" href="javascript:;" class="col-md-offset-1 col-md-4 col-md-offset-1 subbotones btn btn-lg m-r-5">Rebanadas</a>
-      <a data-toggle="modal" data-target="#gelatinas" id="gelatinass" href="javascript:;" class="col-md-offset-1 col-md-4 col-md-offset-1 subbotones btn btn-lg m-r-5">Gelatinas</a><br><br>
-      <a data-toggle="modal" data-target="#pasteles" id="pasteless" href="javascript:;" class="col-md-offset-1 col-md-4 col-md-offset-1 subbotones btn btn-lg m-r-5">Pasteles</a>
-      <a data-toggle="modal" data-target="#varios2" id="varios2s" href="javascript:;" class="col-md-offset-1 col-md-4 col-md-offset-1 subbotones btn btn-lg m-r-5">Varios</a>
+    <div id="re_pas" class="collapse repos32">
+      <a  data-toggle="collapse" href="#collapseExample7" id="rebanadass" class="col-md-offset-1 col-md-4 col-md-offset-1 subbotones btn btn-lg m-r-5">Rebanadas</a>
+      <a  data-toggle="collapse" href="#collapseExample8" id="gelatinass" class="col-md-offset-1 col-md-4 col-md-offset-1 subbotones btn btn-lg m-r-5">Gelatinas</a><br><br>
+      <a  data-toggle="collapse" href="#collapseExample9" id="pasteless" class="col-md-offset-1 col-md-4 col-md-offset-1 subbotones btn btn-lg m-r-5">Pasteles</a>
+      <a  data-toggle="collapse" href="#collapseExample10" id="varios2s" class="col-md-offset-1 col-md-4 col-md-offset-1 subbotones btn btn-lg m-r-5">Varios</a>
     </div>
   </div>
-
+  <div class="collapse col-md-8" id="collapseExample7">
+    <br>
+    <?php foreach ($result_rebanadas as $key => $value){ ?>
+      <div class="col-md-6">
+      <p>Rebanadas de $<?php echo $value->precio?>:<br>&nbsp; <input class="reban" type="number" min="0" max="99" style="width:20%; text-align:center;" id="7cantidad<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+    </div>
+    <?php } ?>
+    <div id="capa8">
+    </div>
+    <br>
+    <button class="enviar8 btn btn-success hidden" type="button" name="button">Listo</button>
+    <br><br>
+    <!-- <button class="delete8 btn btn-danger hidden" type="button" name="button">Eliminar total</button> -->
+  </div>
+  <div class="collapse col-md-8" id="collapseExample8">
+    <?php foreach ($result_gelatinas as $key => $value){ ?>
+      <div class="col-md-6">
+      <p>Gelatinas de $<?php echo $value->precio?>:<br>&nbsp; <input class="gelat" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad8<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+    </div>
+    <?php } ?>
+    <div id="capa9">
+    </div>
+    <br>
+    <button class="enviar9 btn btn-success hidden" type="button" name="button">Listo</button>
+    <br><br>
+    <!-- <button class="delete9 btn btn-danger hidden" type="button" name="button">Eliminar total</button> -->
+  </div>
+  <div class="collapse col-md-8" id="collapseExample9">
+    <br>
+    <?php foreach ($result_pasteles as $key => $value){ ?>
+      <div class="col-md-6">
+      <p>Pasteles de $<?php echo $value->precio?>:<br>&nbsp; <input class="pastel" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad9<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+    </div>
+    <?php } ?>
+    <div id="capa10">
+    </div>
+    <br>
+    <button class="enviar10 btn btn-success hidden" type="button" name="button">Listo</button>
+    <br><br>
+    <!-- <button class="delete10 btn btn-danger hidden" type="button" name="button">Eliminar total</button> -->
+  </div>
+  <div class="collapse col-md-8" id="collapseExample10">
+    <br>
+    <?php foreach ($result_varios as $key => $value){ ?>
+    <div class="col-md-6">
+      <p>Reposteria (<?php echo $value->name_reposteria?>) $<?php echo $value->precio?>:<br>&nbsp; <input class="varios" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad10<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+    </div>
+    <?php } ?>
+    <div id="capa11">
+    </div>
+    <br>
+    <button class="enviar11 btn btn-success hidden" type="button" name="button">Listo</button>
+    <br><br>
+    <!-- <button class="delete11 btn btn-danger hidden" type="button" name="button">Eliminar total</button> -->
+  </div>
 
   <div id="myModal" class="modal fade cierra" role="dialog">
     <div class="modal-dialog" style="width:45%;">
@@ -85,7 +247,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result as $key => $value){ ?>
           <div class="col-md-6">
-          <p><?php echo $value->name_pan ?>: &nbsp;<input class="bolillo" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_pan ?>: &nbsp;<input class="bolillo" type="tel" min="0" max="99" style="width:20%; text-align:center;" id="cantidad11<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
           <br>
         </div>
         <?php } ?>
@@ -116,7 +278,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_dulce as $key => $value){ ?>
           <div class="col-md-6">
-          <p><?php echo $value->name_pan ?>: &nbsp;<input class="dulce" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_pan ?>: &nbsp;<input class="dulce" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad12<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
           <br>
         </div>
         <?php } ?>
@@ -147,7 +309,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_repos as $key => $value){ ?>
           <div class="col-md-12">
-          <p><?php echo $value->name_pan ?>:<br> &nbsp; <input class="reposteria" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_pan ?>:<br> &nbsp; <input class="reposteria" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad13<?php echo $value->idpan?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar3 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -177,7 +339,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_velas as $key => $value){ ?>
           <div class="col-md-12">
-          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="velas" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="velas" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad14<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar4 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -207,7 +369,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_leche as $key => $value){ ?>
           <div class="col-md-4">
-          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="leche" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="leche" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad15<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar5 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -237,7 +399,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_cafe as $key => $value){ ?>
           <div class="col-md-6">
-          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="cafe" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="cafe" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad16<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar6 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -267,7 +429,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_choco as $key => $value){ ?>
           <div class="col-md-6">
-          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="choco" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_extra?>:<br>&nbsp; <input class="choco" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad17<?php echo $value->idextra?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar7 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -297,7 +459,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_rebanadas as $key => $value){ ?>
           <div class="col-md-6">
-          <p><?php echo $value->name_reposteria?>:<br>&nbsp; <input class="reban" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_reposteria?>:<br>&nbsp; <input class="reban" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad18<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar8 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -327,7 +489,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_gelatinas as $key => $value){ ?>
           <div class="col-md-6">
-          <p><?php echo $value->name_reposteria?>:<br>&nbsp; <input class="gelat" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_reposteria?>:<br>&nbsp; <input class="gelat" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad19<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar9 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -357,7 +519,7 @@ $url = BASE_URL;
         <br>
         <?php foreach ($result_pasteles as $key => $value){ ?>
           <div class="col-md-4">
-          <p><?php echo $value->name_reposteria?>:<br>&nbsp; <input class="pastel" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_reposteria?>:<br>&nbsp; <input class="pastel" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad20<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar10 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -389,7 +551,7 @@ $url = BASE_URL;
           // echo "<pre>";print_r($result_varios);echo "</pre>";
           ?>
         <div class="col-md-6">
-          <p><?php echo $value->name_reposteria?>:<br>&nbsp; <input class="varios" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
+          <p><?php echo $value->name_reposteria?>:<br>&nbsp; <input class="varios" type="number" min="0" max="99" style="width:20%; text-align:center;" id="cantidad21<?php echo $value->idreposteria?>" data-precio="<?php echo $value->precio?>" name="cantidad" value=""></p>
         </div>
         <?php } ?>
         <button class="enviar11 btn btn-success hidden" type="button" name="button">Listo</button>
@@ -406,3 +568,83 @@ $url = BASE_URL;
     </div>
     <!-- END container -->
   </div>
+
+<script>
+  $("#blanco_gen").on('click',function(){
+    if ($(".dulce_gen,.repos_gen,.velas_gen,.varios_gen,.repos_pas_gen").hasClass("hidden")) {
+        $(".dulce_gen,.repos_gen,.velas_gen,.varios_gen,.repos_pas_gen").removeClass("hidden");
+      }else{;
+        $(".dulce_gen,.repos_gen,.velas_gen,.varios_gen,.repos_pas_gen").addClass("hidden");
+      }
+  });
+  $(".dulce_gen").on('click',function(){
+    if ($("#blanco_gen,.repos_gen,.velas_gen,.varios_gen,.repos_pas_gen").hasClass("hidden")) {
+        $("#blanco_gen,.repos_gen,.velas_gen,.varios_gen,.repos_pas_gen").removeClass("hidden");
+      }else{;
+        $("#blanco_gen,.repos_gen,.velas_gen,.varios_gen,.repos_pas_gen").addClass("hidden");
+      }
+  });
+  $(".repos_gen").on('click',function(){
+    if ($(".dulce_gen,#blanco_gen,.velas_gen,.varios_gen,.repos_pas_gen").hasClass("hidden")) {
+        $(".dulce_gen,#blanco_gen,.velas_gen,.varios_gen,.repos_pas_gen").removeClass("hidden");
+      }else{;
+        $(".dulce_gen,#blanco_gen,.velas_gen,.varios_gen,.repos_pas_gen").addClass("hidden");
+      }
+  });
+  $(".velas_gen").on('click',function(){
+    if ($(".dulce_gen,.repos_gen,#blanco_gen,.varios_gen,.repos_pas_gen").hasClass("hidden")) {
+        $(".dulce_gen,.repos_gen,#blanco_gen,.varios_gen,.repos_pas_gen").removeClass("hidden");
+      }else{;
+        $(".dulce_gen,.repos_gen,#blanco_gen,.varios_gen,.repos_pas_gen").addClass("hidden");
+      }
+  });
+  $(".varios_gen").on('click',function(){
+    if ($(".dulce_gen,.repos_gen,.velas_gen,#blanco_gen,.repos_pas_gen").hasClass("hidden")) {
+        $(".dulce_gen,.repos_gen,.velas_gen,#blanco_gen,.repos_pas_gen").removeClass("hidden");
+      }else{;
+        $(".dulce_gen,.repos_gen,.velas_gen,#blanco_gen,.repos_pas_gen").addClass("hidden");
+      }
+  });
+  $("#variosas").on('click',function(){
+    if ($(".dulce_gen,.repos_gen,.velas_gen,#blanco_gen,.repos_pas_gen").hasClass("hidden")) {
+        $(".dulce_gen,.repos_gen,.velas_gen,#blanco_gen,.repos_pas_gen").removeClass("hidden");
+      }else{;
+        $(".dulce_gen,.repos_gen,.velas_gen,#blanco_gen,.repos_pas_gen").addClass("hidden");
+      }
+  });
+  $("#re_pas").on('click',function(){
+    if ($(".dulce_gen,.repos_gen,.velas_gen,#blanco_gen,.varios_gen").hasClass("hidden")) {
+        $(".dulce_gen,.repos_gen,.velas_gen,#blanco_gen,.varios_gen").removeClass("hidden");
+      }else{;
+        $(".dulce_gen,.repos_gen,.velas_gen,#blanco_gen,.varios_gen").addClass("hidden");
+      }
+  });
+  $(".repos_pas_gen").on('click',function(){
+    if ($(".dulce_gen,.repos_gen,.velas_gen,#blanco_gen,.varios_gen").hasClass("hidden")) {
+        $(".dulce_gen,.repos_gen,.velas_gen,#blanco_gen,.varios_gen").removeClass("hidden");
+      }else{;
+        $(".dulce_gen,.repos_gen,.velas_gen,#blanco_gen,.varios_gen").addClass("hidden");
+      }
+  });
+
+var m = "";
+var l = "";
+var value = "";
+// var value = 0;
+  $('input').on('click', function(){
+    l = $(this).attr('class');
+    m = $(this).attr("id");
+  });
+
+
+  $(".x").on('click', function(){
+    console.log("clase: ", l);
+    console.log("id : ", m);
+    value = $.trim($("#"+m).val());
+    console.log('valor inicial: ',value);
+    var n = $(this).attr('data-val');
+    var c = $("#"+m).val(value+''+n);
+    $("."+l).trigger("change");
+  });
+
+</script>

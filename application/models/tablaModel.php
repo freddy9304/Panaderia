@@ -15,13 +15,18 @@ class tablaModel extends CI_Model
       return null;
     }
   }
-  public function getVentasAll($type_venta){
-    // print_r($type_venta);
+  public function getVentasAll($type_venta,$fechas1,$fechas2){
     if ($type_venta=='all') {
-      $this->db->select("*")->from("ventas")->where("isDelete = 0");
+      $filters = $fechas1 ? " and fecha_registro BETWEEN '{$fechas1}' and '{$fechas2}'":' ';
+      $this->db->select("*")->from("ventas")->where("isDelete = 0 {$filters}");
+      // echo 'all: '.$filters;
+      // print_r($this->db->last_query());
     }else{
+      $filters = $fechas1 ? " and fecha_registro BETWEEN '{$fechas1}' and '{$fechas2}'":' ';
       $filter = $type_venta ? " and tipo_venta = '{$type_venta}'":'';
-      $this->db->select("*")->from("ventas")->where("isDelete = 0 {$filter}");
+      $this->db->select("*")->from("ventas")->where("isDelete = 0 {$filter} {$filters}");
+      // echo $type_venta.': '.$filters;
+      // print_r($this->db->last_query());
     }
   $query = $this->db->get();
     if ($query->num_rows() > 0) {
@@ -30,5 +35,16 @@ class tablaModel extends CI_Model
       return null;
     }
     // print_r($query);
+  }
+  public function getDetailsAll(){
+    // print_r($type_venta);
+      $this->db->select("*")->from("ventas_pasteles")->where("isDelete = 0");
+      $query = $this->db->get();
+
+    if ($query->num_rows() > 0) {
+      return $query->result();
+      }else{
+      return null;
+    }
   }
 }

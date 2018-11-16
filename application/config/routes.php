@@ -57,4 +57,5 @@ $route['user'] = 'home/user';
 $route['reposteria'] = 'home/reposteria';
 $route['login'] = 'login';
 $route['tabla'] = 'tabla';
+$route['detalleVenta'] = 'detalleVenta';
 $route['venta'] = 'venta/insertar_venta';

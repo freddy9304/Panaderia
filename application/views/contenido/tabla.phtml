@@ -1,17 +1,31 @@
 <?php
 $url = BASE_URL;
 // echo "<pre>";
-// print_r($result[0]);
+// print_r($result);
 // echo "</pre>";
+// $general=$type_venta;
  ?>
- <?php if ($result[0]->tipo_venta=='General') { ?>
-   <h1>Tabla de ventas general</h1>
- <?php }else{ ?>
-   <h1>Tabla de ventas de Pasteleria</h1>
- <?php } ?>
+ <style media="screen">
+  .filter{
+      margin-right: 16px;
+      margin-left: 16px;
+  }
+  input[type="datetime-local"]{
+    width: 18%;
+  }
+ </style>
+ <?php if ($result): ?>
+   <?php if ($result[0]->tipo_venta=='General') { ?>
+     <h1>Tabla de ventas general</h1>
+   <?php }else{ ?>
+     <h1>Tabla de ventas de Pasteleria</h1>
+   <?php } ?>
+ <?php else: ?>
+       <h1>Tabla de ventas</h1>
+<?php endif; ?>
 <br>
 <div class="col-md-12">
-  <form method="POST" action="<?php echo $url;?>tabla#sesion" role="form">
+  <!-- <form method="POST" action="<?php echo $url;?>tabla#sesion" role="form">
     <div class="" style="width: 28%;margin-left: 40.5%;border: 4px solid #e1935b;border-radius: 20px;">
       <label for="">Selecione un tipo de venta: </label><br>
       <input type="radio" name="type_venta" value="all">&nbsp; <label>Todos</label>
@@ -21,7 +35,17 @@ $url = BASE_URL;
       <button class="btn btn-info" type="submit" name="button"><i class="fa fa-filter "></i>&nbsp;Filtrar</button>
       <br><br>
     </div>
+  </form> -->
+  <form action="<?php echo $url;?>tabla#sesion" method="post">
+    <div class="col-md-12">
+      <button class="filter col-md-2 btn btn-danger btn-md" name="type_venta" value="all" type="submit">General</button>
+      <button class="filter col-md-2 btn btn-info btn-md" name="type_venta" value="Panes" type="submit">Panes y Reposteria</button>
+      <button class="filter col-md-2 btn btn-success btn-md" name="type_venta" value="Pasteleria" type="submit">Pasteleria</button>
+      <input class="filter col-md-3" type="datetime-local" name="fechas1" value="">
+      <input class="filter col-md-3" type="datetime-local" name="fechas2" value="">
+    </div>
   </form>
+  <br><br>
   <table class="table table-striped table-bordered table-list" id="tabla">
     <thead>
         <tr>
@@ -29,29 +53,54 @@ $url = BASE_URL;
             <th>Tipo de Venta</th>
             <th>Fecha de Venta</th>
             <th>Total de Venta</th>
+            <th>Estatus</th>
+            <th>Tipo de Pago</th>
+            <th>Folio</th>
         </tr>
     </thead>
-    <tbody>
-      <?php foreach ($result as $key => $value) {
-        // print_r($result);
-        ?>
-        <tr>
-          <td><?php echo $key+1 ?></td>
-          <td><?php echo $value->tipo_venta ?></td>
-          <td><?php echo $value->fecha_registro?></td>
-          <td><?php echo $value->total?></td>
-        </tr>
-      <?php } ?>
-    </tbody>
+    <?php if ($result): ?>
+      <tbody>
+        <?php foreach ($result as $key => $value) {
+          // $resta = ($value->total-$value->bonificacion);
+          // echo "<pre>";
+          // print_r($resta);
+          // echo "</pre>";
+          ?>
+          <tr>
+            <td><?php echo $key+1 ?></td>
+            <td><?php echo $value->tipo_venta ?></td>
+            <td><?php echo $value->fecha_registro?></td>
+            <td><?php echo $value->total?></td>
+            <td><?php echo $value->confirm==1?'Liquidado':'Pendiente'?></td>
+            <td><?php echo $value->tipo_pago==0?'No pagado':($value->tipo_pago==1?'Efectivo':'Tarjeta')?></td>
+            <td><?php echo $value->folio?></td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    <?php endif; ?>
   </table>
 <div class="col-md-2">
-  <form action="<?php echo $url;?>excel_export/action" method="post">
+  <form action="<?php echo $url;?>excel_export/action/<?php echo $general.'/'.$fe1.'/'.$fe2 ?>" method="post">
     <button class="btn btn-success btn-lg m-r-5" type="submit" name="export"><i class="fa fa-file-excel-o "></i> Generar excel</button>
+    <?php if ($result): ?>
+      <?php if ($result[0]->tipo_venta=="Panes") { ?>
+        <input class="hidden" type="text" name="type_venta" value="Panes">
+      <?php } else{ ?>
+        <input class="hidden" type="text" name="type_venta" value="Pasteleria">&nbsp;
+      <?php } ?>
+    <?php endif; ?>
   </form>
 </div>
 <div class="col-md-2">
-  <form action="<?php echo $url;?>pdfs/generar" method="post">
+  <form action="<?php echo $url;?>pdfs/generar/<?php echo $general.'/'.$fe1.'/'.$fe2 ?>" method="post">
     <button class="btn btn-danger btn-lg m-r-5" type="submit" name="export" target="_blank"><i class="fa fa-file-pdf-o "></i> Generar imprimir</button>
+    <?php if ($result): ?>
+      <?php if ($result[0]->tipo_venta=="Panes") { ?>
+        <input class="hidden" type="text" name="type_venta" value="Panes">
+      <?php } else { ?>
+        <input class="hidden" type="text" name="type_venta" value="Pasteleria">&nbsp;
+      <?php } ?>
+    <?php endif; ?>
     <!-- <input type="submit" value="Crear PDF" title="Crear PDF" /> -->
   </form>
 </div>
@@ -77,5 +126,4 @@ $(document).ready(function() {
             }  );
 
     } );
-
 </script>

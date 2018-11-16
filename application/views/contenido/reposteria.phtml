@@ -3,11 +3,19 @@ $num = array('0'=>'30','1'=>'50','2'=>'80','3'=>'100','4'=>'120','5'=>'150','6'=
 ?>
 <h1 style="text-align:center;"> <?= $titulo ?></h1>
 <div class="reposte">
-  <label class="lab_name" for="">Nombre: </label>&nbsp;<input class="input_usr_rep name_repos" type="text" name="" placeholder="Nombre completo del cliente" value="">
+  <label class="lab_name" for="">Nombre: </label>&nbsp;<input id="nom_pastel" required class="input_usr_rep name_repos" type="text" name="" placeholder="Nombre completo del cliente" value="">
   <br><br>
-  <label class="lab_direcc" for="">Dirección: </label>&nbsp;<input class="input_usr_rep direcc_repos" type="text" name="" placeholder="Dirección completo del cliente" value="">
+  <label class="lab_name" for="">Dirección: </label>&nbsp;<input id="direc_pastel" required class="input_usr_rep direcc_repos" type="text" name="" placeholder="Dirección completo del cliente" value="">
   <br><br>
-  <div class="gen_pastel">
+  <label class="lab_name" for="">Telefono: </label>&nbsp;<input id="num_pastel" required class="input_usr_rep nume_repos" type="number" name="" placeholder="Numero telefonico" value="">
+  <br><br>
+  <label class="lab_name" for="">Celular: </label>&nbsp;<input id="cel_pastel" required class="input_usr_rep nume_repos" type="number" name="" placeholder="Numero celular" value="">
+  <br><br>
+  <label class="lab_name" for="">Correo: </label>&nbsp;<input id="correo_pastel" required class="input_usr_rep nume_repos" type="mail" name="" placeholder="Correo electronico" value="">
+  <br><br>
+  <label class="lab_name" for="">Especificaciones: </label>&nbsp;<input id="esp_pastel" required class="input_usr_rep nume_repos" type="text" name="" placeholder="Ingresar especificaciones del pastel" value="">
+  <br><br>
+  <div class="gen_pastel" style="height:38%;">
     <h3>Datos del pastel</h3>
       <div class="col-md-4">
         <label>Numero de personas:</label>
@@ -17,7 +25,7 @@ $num = array('0'=>'30','1'=>'50','2'=>'80','3'=>'100','4'=>'120','5'=>'150','6'=
           <?php } ?>
         </select>
       </div>
-      <div class="col-md-4 col-md-offset-?4" id="capa">
+      <div class="col-md-4 col-md-offset-4" id="capa">
       </div>
       <div class="col-md-12">
 
@@ -27,6 +35,15 @@ $num = array('0'=>'30','1'=>'50','2'=>'80','3'=>'100','4'=>'120','5'=>'150','6'=
           <option id="pre_2" value="160">$160</option>
           <option id="pre_3" value="180">$180</option>
         </select>
+      </div>
+      <div class="col-md-12">
+        <label>Solicita base: </label>
+        <select id="relle_base" name="">
+          <option value="si">Si</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+      <div class="col-md-12" id="capa_in">
       </div>
       <h3>Tipo de relleno:</h3>
       <div class="col-md-12 140 hidden" >
@@ -44,25 +61,53 @@ $num = array('0'=>'30','1'=>'50','2'=>'80','3'=>'100','4'=>'120','5'=>'150','6'=
         <select class="" id="relleno_3" name="">
         </select>
       </div>
-      <div class="col-md-offset-4 col-md-3">
-        <button class="fin_repos btn btn-success" type="button" name="button">Listo</button>
-      </div>
-      <div class="col-md-3">
-        <button class="fin_repos_delete btn btn-danger hidden" type="button" name="button">Eliminar total</button>
+      <div class="col-md-12">
+        <div class="col-md-6">
+          <label for="">¿Desea dejar anticipo? $</label>&nbsp;<input type="number" id="anti_pastel" id="" name="" value="">&nbsp;&nbsp;&nbsp;
+        </div>
+        <div class="col-md-3">
+          <button class="fin_repos btn btn-success" type="button" name="button">Listo</button>
+        </div>
+        <div class="col-md-3">
+          <button class="fin_repos_delete btn btn-danger hidden" type="button" name="button">Eliminar total</button>
+        </div>
       </div>
   </div>
+  <!-- <div class="">
+    <label for="">Anticipo</label>
+    <label class="lab_name" for="">Especificaciones: </label>&nbsp;<input id="num_pastel" required class="input_usr_rep nume_repos" type="number" name="" placeholder="Numero telefonico" value="">
+    <br><br>
+  </div> -->
 </div>
 <script type="text/javascript">
+$("#relle_base").click(function(){
+  var c = $("#relle_base").val();
+  console.log("dentro de "+c);
+});
+// $(document).ready(function() {
+//   $('#main-menu,.btn_num').remove();
+// });
 var nombressss = $('.name_repos').val();
 var direcc = $('.direcc_repos').val();
-$("#num_per").change(function(event){
+$("#relle_base").click(function(event){
+  // console.log('dentro');
+  var con = $(this).val();
+  if (con=="si") {
+    console.log("esto: ",con);
+    $("#capa_in").html("<label>Ingresar el importe de la base: $</label>&nbsp;<input type='number' class='base' id='base_precio' value>");
+  }else{
+    $("#capa_in").html("<label>Sin base </label>");
+  }
+
+});
+$("#num_per").click(function(event){
   var cantidad = $(this).val();
   var kg = {'30':'3','50':'5','80':'8','100':'10','120':'12','150':'15','200':'20','250':'25','300':'30','350':'35','400':'40','450':'45','500':'50'};
     if (kg[cantidad]) {
-      $("#capa").html("<label>Kg: </label>&nbsp;<input id='cant' style='width:12%; height:2.5%;' type='text' value='"+kg[cantidad]+"'>");
+      $("#capa").html("<label>Kg: </label>&nbsp;<input id='cant' style='width:12%; height:14.5%;' type='text' value='"+kg[cantidad]+"'>");
     }
 });
-$("#relle_pre").change(function(event){
+$("#relle_pre").click(function(event){
   var select = "";
   var precio = $(this).val();
   var relle_1 = {'0':'Durazno','1':'Fresa','2':'Nuez','3':'Cajeta','4':'Mango'};
@@ -74,7 +119,7 @@ $("#relle_pre").change(function(event){
       $(".160").addClass("hidden");
       $(".180").addClass("hidden");
       for (var i in relle_1) {
-        select+="<option class='num' value='140'>"+relle_1[i]+"</option>";
+        select+="<option class='num_relle"+[i]+"' value='"+relle_1[i]+"'>"+relle_1[i]+"</option>";
       }
       $("#relleno").html(select);
     }else if (precio=='160') {
@@ -82,7 +127,7 @@ $("#relle_pre").change(function(event){
       $(".160").removeClass("hidden");
       $(".180").addClass("hidden");
       for (var i in relle_2) {
-        select+="<option class='num' value='160'>"+relle_2[i]+"</option>";
+        select+="<option class='num_relle"+[i]+"' value='"+relle_2[i]+"'>"+relle_2[i]+"</option>";
       }
       $("#relleno_2").html(select);
     }else{
@@ -90,18 +135,53 @@ $("#relle_pre").change(function(event){
       $(".160").addClass("hidden");
       $(".140").addClass("hidden");
       for (var i in relle_3) {
-        select+="<option class='num' value='180'>"+relle_3[i]+"</option>";
+        select+="<option class='num_relle"+[i]+"' value='"+relle_3[i]+"'>"+relle_3[i]+"</option>";
       }
       $("#relleno_3").html(select);
     }
 });
 
 $(".fin_repos").click(function(event){
+
   var can = $("#cant").val();
   var pre = $("#relle_pre").val();
+  var nom_pastel = $("#nom_pastel").val();
+  var direc_pastel = $("#direc_pastel").val();
+  var num_pastel = $("#num_pastel").val();
+  var cel_pastel = $("#cel_pastel").val();
+  var correo_pastel = $("#correo_pastel").val();
+  var esp_pastel = $("#esp_pastel").val();
+  var base_pastel = $("#base_precio").val();
+  var anticipo_pastel = $("#anti_pastel").val();
+
+  if (pre=='140') {
+    var  relleno  = $("#relleno").val();
+  }else if (pre=='160') {
+    var  relleno = $("#relleno_2").val();
+  }else {
+    var  relleno = $("#relleno_3").val();
+  }
   // console.log(pre);
+  $('#totales tr:last').after('<tr id="nom_pastel1"><td>Nombre</td><td id="nom">'+nom_pastel+'</td></tr>');
+  $('#totales tr:last').after('<tr id="direc_pastel1"><td>Direccion</td><td id="dir">'+direc_pastel+'</td></tr>');
+  $('#totales tr:last').after('<tr id="num_pastel1"><td>Telefono</td><td id="num">'+num_pastel+'</td></tr>');
+  $('#totales tr:last').after('<tr id="cel_pastel1"><td>Celular</td><td id="cel">'+cel_pastel+'</td></tr>');
+  $('#totales tr:last').after('<tr id="correo_pastel1"><td>Correo</td><td id="corr">'+correo_pastel+'</td></tr>');
+  $('#totales tr:last').after('<tr id="esp_pastel1"><td>especificaciones</td><td id="espe">'+esp_pastel+'</td></tr>');
+  $('#totales tr:last').after('<tr id="relleno_final"><td>Relleno</td><td id="rell">'+relleno+'</td></tr>');
   $('#totales tr:last').after('<tr id="cantidad"><td>Kg de pastel</td><td id="can">'+can+'</td></tr>');
-  $('#totales tr:last').after('<tr id="precio_relle"><td>Precio de relleno</td><td id="pre">'+pre+'</td></tr>');
+  if (base_pastel==undefined) {
+    $('#totales tr:last').after('<tr id="base1"><td>Base del pastel</td><td class="col-md-1">$</td><td id="bas">0</td></tr>');
+  }else{
+    $('#totales tr:last').after('<tr id="base1"><td>Base del pastel</td><td class="col-md-1">$</td><td id="bas">'+base_pastel+'</td></tr>');
+  }
+  $('#totales tr:last').after('<tr id="precio_relle"><td>Precio de relleno</td><td class="col-md-1">$</td><td id="pre">'+pre+'</td></tr>');
+
+  if (anticipo_pastel==undefined) {
+    $('#totales tr:last').after('<tr id="anti1"><td>Anticipo</td><td class="col-md-1">$</td><td id="ant">0</td></tr>');
+  }else{
+    $('#totales tr:last').after('<tr id="anti1"><td>Anticipo</td><td class="col-md-1">$</td><td id="ant">'+anticipo_pastel+'</td></tr>');
+  }
   // $('#totales table:after').append('<h4>Datos generales de la venta<h4>');
   $(".venta").removeClass("disabled");
   $(".fin_repos_delete").removeClass("hidden");
@@ -109,13 +189,24 @@ $(".fin_repos").click(function(event){
   $("#total_gen").remove();
   $("#ticket").remove();
   $("#ticket_imprimir").remove();
+
+  // $("#porcentaje").html("<label>Porcentaje a dejar :</label>&nbsp;");
 });
 
 $(".fin_repos_delete").click(function (event) {
   // total_varios = 0;
   $(".fin_repos_delete").addClass("hidden");
   // $("#variost").remove();
+  $("#nom_pastel1").remove();
+  $("#direc_pastel1").remove();
+  $("#relleno_final").remove();
+  $("#num_pastel1").remove();
+  $("#cel_pastel1").remove();
+  $("#correo_pastel1").remove();
+  $("#esp_pastel1").remove();
   $("#cantidad").remove();
+  $("#base1").remove();
+  $("#anti1").remove();
   $("#precio_relle").remove();
   $(".fin_repos").removeClass("disabled");
   $(".venta").addClass("disabled");
