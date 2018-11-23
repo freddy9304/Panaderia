@@ -5,7 +5,6 @@
  */
 class Home extends CI_Controller
 {
-
   public function index($folio_cu=''){
     // die("dentro de index");
       // $this->session->sess_destroy();
